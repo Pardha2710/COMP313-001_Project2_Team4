@@ -104,11 +104,8 @@ public class UserService implements IUserService {
 
 	@Override
 	public void insertApprovedFaculty(ApprovedFaculty users) {
-		
 		approvedFacultyRepository.save(users);
 		userRepository.deleteById(users.getUserId());
-
-		
 	}
 
 	@Override
