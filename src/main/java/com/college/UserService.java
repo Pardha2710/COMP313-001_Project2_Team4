@@ -112,6 +112,7 @@ public class UserService implements IUserService {
 	public List<Courses> viewCourses() {
 		List<Courses> l = courseRepository.findAll();
 		return l;
+		
 	}
 
 }
