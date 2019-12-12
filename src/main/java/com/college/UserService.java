@@ -107,6 +107,7 @@ public class UserService implements IUserService {
 		approvedFacultyRepository.save(users);
 		userRepository.deleteById(users.getUserId());
 	}
+	
 
 	@Override
 	public List<Courses> viewCourses() {
