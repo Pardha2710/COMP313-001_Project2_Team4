@@ -1,0 +1,37 @@
+<!DOCTYPEhtml>
+<htmlxmlns:th="http://www.thymeleaf.org">
+	<head>
+<metacharset="ISO-8859-1">
+<title>Faculties List</title>
+	</head>
+	<body>
+		<table>
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>UserName</th>
+					<th>Role</th>
+					<th>Approve</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${facultyList.empty}">
+					<td colspan="2">Not Registered</td>
+				</tr>
+				<tr th:each="faculties : ${facultyList}">
+					<td><span th:text="${faculties.firstName}">First Name </span></td>
+					<td><span th:text="${faculties.lastName}">Last Name </span></td>
+					<td><span th:text="${faculties.Email}">Email </span></td>
+					<td><span th:text="${faculties.username}">UserName </span></td>
+					<td><span th:text="${faculties.role}">Role </span></td>
+					<td><a th:href="@{/approve/{id}(id=${faculties.userId})}"
+						class="btn btn-primary"> <i class="fas fa-user-times ml-2"></i>Approve
+					</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+	</html>

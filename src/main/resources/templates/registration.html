@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Registration Form</h1>
+<form th:action="@{/registrationSuccess}" th:object="${registrationForm}" method="post" >
+<label for="firstName">First Name:</label>
+<input type="text" id="firstName" name="firstName" required="required"></input>
+
+<label for="lastName">Last Name:</label>
+<input type="text" id="lastName" name="lastName" required="required"></input>
+
+<label for="email">UserName:</label>
+<input type="text" id="email" name="email" required="required"></input>
+
+<label for="role">Role:</label>
+<input type="text" id="role" name="role" required="required"></input>
+
+
+<label for="username">UserName:</label>
+<input type="text" id="username" name="username" required="required"></input>
+
+<label for="password">Password:</label>
+<input type="password" id="password" name="password" required="required"></input>
+
+<input type="submit" value="Register"></input>
+</form>
+</body>
+</html>

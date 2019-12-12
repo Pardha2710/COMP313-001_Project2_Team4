@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Faculty - Login</title>
+</head>
+<body>
+<h1>Faculty Login</h1>
+<form th:action="@{/facultyLoginSuccess}" method="post" >
+<label for="username">UserName:</label>
+<input type="text" id="username" name="username" required="required"></input>
+
+<label for="password">Password:</label>
+<input type="password" id="password" name="password" required="required"></input>
+
+<input type="submit" value="Login"></input>
+</form>
+
+</body>
+</html>
