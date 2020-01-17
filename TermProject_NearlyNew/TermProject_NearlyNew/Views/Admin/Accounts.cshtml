@@ -1,0 +1,33 @@
+﻿@using TermProject_NearlyNew.Models.DTO
+@model IEnumerable<Account>
+
+@{
+    ViewData["Title"] = "Accounts";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Accounts Management</h1>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">EmailAddress</th>
+            <th scope="col">Password</th>
+            <th scope="col">Role</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Account a in Model)
+        {
+            <tr>
+                <th scope="row">@a.ID</th>            
+                <td>@a.Email</td>
+                <td>@a.Password</td>
+                <td>@a.Role</td>
+                <td><p><a href="#">Edit</a> | <a href="#">Delete</a></p></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,32 @@
+﻿@namespace TermProject_NearlyNew.Models.DTO
+@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Products Management</h1>
+
+<a asp-controller="Admin" asp-action="AddProduct" class="btn btn-primary" role="button">Add new Product</a>
+
+
+@foreach (Product item in Model)
+{
+    <div class="card" style="width: 100%;">
+        <div class="card-body">
+            <h5 class="card-title">@item.Title (id: @item.ID)</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@item.Category</h6>
+            <p class="card-text">
+                <p> @item.Description
+                <p> Size: @item.Size
+                <p> Price: @item.Price
+            </p>
+            <a href="#" class="card-link">Edit</a>
+            <form asp-action="ProcessProduct" method="post">
+                <input type="hidden" name="id" value=@item.ID />
+                <button type="submit" name="detail" value="Detail" class="btn btn-outline-info">Detail</button> 
+                <button type="submit" name="remove" value="Remove" class="btn btn-outline-danger">Remove</button>
+            </form>
+        </div>
+    </div>
+}

@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewData["Title"] = "Female_Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .slidecontainer {
+        width: 100%;
+    }
+
+    .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 25px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+    }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+</style>
+<!--================Category Product Area =================-->
+<section class="cat_product_area section_padding border_top">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="left_sidebar_area">
+                    <aside class="left_widgets p_filter_widgets sidebar_box_shadow">
+                        <div class="l_w_title">
+                            <h3>Browse Categories</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+
+                                <li class="sub-menu">
+                                    <a href="#Electronics" class=" d-flex justify-content-between">
+                                        Girls
+                                        <div class="right ti-plus"></div>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="#Electronics">Upper</a>
+                                        </li>
+                                        <li>
+                                            <a href="#Electronics">Bottoms</a>
+                                        </li>
+                                        <li>
+                                            <a href="#Electronics">Swim Wear</a>
+                                        </li>
+                                        <li>
+                                            <a href="#Electronics">Dress</a>
+                                        </li>
+                                        <li>
+                                            <a href="#Electronics">Coat</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+
+                                
+
+                                
+
+                            </ul>
+                        </div>
+                    </aside>
+
+                    <aside class="left_widgets p_filter_widgets sidebar_box_shadow">
+                        <div class="l_w_title">
+                            <h3>Product filters</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                <p>Age</p>
+                                <li>
+                                    <input type="radio" name="age">
+                                    <a href="#">4 Years</a>
+                                </li>
+                                <li>
+                                    <input type="radio" name="age">
+                                    <a href="#">6 Years</a>
+                                </li>
+                                <li class="active">
+                                    <input type="radio" name="age">
+                                    <a href="#">8 Years</a>
+                                </li>
+
+                            </ul>
+                            <ul class="list">
+                                <p>Size</p>
+                                <li>
+                                    <input type="radio" name="size">
+                                    <a href="#">Small Size(2)</a>
+                                </li>
+                                <li>
+                                    <input type="radio" name="size">
+                                    <a href="#">Medium Size(4)</a>
+                                </li>
+                                <li>
+                                    <input type="radio" name="size">
+                                    <a href="#">Large Size(6)</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </aside>
+
+                    <aside class="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
+                        <div class="l_w_title">
+                            <h3>Price Filter</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <div class="range_item">
+                                <!-- <div id="slider-range"></div> -->
+
+                                <div class="slidecontainer">
+
+                                    <input type="range" min="5" max="100" value="50">
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Tracking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+   
+<!--================Tracking Box Area =================-->
+
+<section class="tracking_box_area section_padding">
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-12">
+                <div class="tracking_box_inner">
+                    <p>
+                        To track your order please enter your Order ID in the box below and press the "Track" button. This was
+                        given
+                        to you on your receipt and in the confirmation email you should have received.
+                    </p>
+                    
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="order" name="order" placeholder="Order ID">
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <button onclick="myFunction()">Track Order</button>
+
+                            <p id="demo"></p>
+
+                            
+
+                            <script>
+                                function myFunction() {
+                                    document.getElementById("demo").innerHTML = "Your Order is under Process";
+                                }
+                            </script>
+                        </div>
+
+
+                  
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<!--================End Tracking Box Area =================-->

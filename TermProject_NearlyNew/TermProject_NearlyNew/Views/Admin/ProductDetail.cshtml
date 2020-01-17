@@ -1,0 +1,50 @@
+﻿@namespace TermProject_NearlyNew.Models.DTO
+@model Product
+
+@{
+    ViewData["Title"] = "ProductDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Product Detail</h1>
+
+
+<form asp-action="UpdateProduct" method="post">
+    <div class="form-group">
+        <label asp-for="Title" class="text-normal text-dark">Title</label>
+        <input asp-for="Title" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="Category" class="text-normal text-dark">Category</label>
+        <input asp-for="Category" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="text-normal text-dark">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="Gender" class="text-normal text-dark">Gender</label>
+        <select asp-for="Gender" class="text-normal text-dark">
+            <option value="Boy">Boy</option>
+            <option value="Girl">Girl</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Size" class="text-normal text-dark">Size</label>
+        <input asp-for="Size" type="number" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="Age" class="text-normal text-dark">Age</label>
+        <input asp-for="Age" type="number" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="text-normal text-dark">Price</label>
+        <input asp-for="Price" type="number" class="form-control">
+    </div>
+    <input asp-for="ID" type="hidden" name="id" value=@Model.ID/>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Update</button>
+        <button class="btn btn-danger disabled" type="reset">Cancel</button>
+    </div>
+</form>
+

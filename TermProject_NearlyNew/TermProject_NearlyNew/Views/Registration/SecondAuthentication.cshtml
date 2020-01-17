@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "SecondAuthentication";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>SecondAuthentication</h1>
+
+<form asp-action="AuthenticateTwo">
+    <div class="form-group">
+        <p>Enter the 6 letters code we sent to your email to login.</p>
+        <input name="code" class="form-control" >
+        <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+</form>
