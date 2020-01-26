@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nearlynew_app/components/category.dart';
-import 'package:nearlynew_app/main.dart';
+import 'package:nearlynew_app/sources/homepage.dart';
 
+
+//Item details
 class ItemDetails extends StatefulWidget {
   final itemName;
   final itemPicture;

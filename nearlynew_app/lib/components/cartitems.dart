@@ -98,6 +98,17 @@ class SingleCartItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Text(cartItemColor,style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(60, 8, 8, 8),
+                  child: Column(
+                    children: <Widget>[
+                      IconButton(icon: Icon(Icons.arrow_drop_up),onPressed: (){}),
+                      Text("$cartItemCount"),
+                      IconButton(icon: Icon(Icons.arrow_drop_down),onPressed: (){})
+                    ],
+
+                  ),
                 )
                ],
             ),
@@ -107,19 +118,11 @@ class SingleCartItem extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Text("\$${cartItemPrice}",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
             ),
+
           ],
         ),
 
         //Quantity of items
-        trailing: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              IconButton(icon: Icon(Icons.arrow_drop_up),onPressed: (){}),
-              Text("$cartItemCount"),
-              IconButton(icon: Icon(Icons.arrow_drop_down),onPressed: (){})
-            ],
-          ),
-        ),
       ),
     );
   }
