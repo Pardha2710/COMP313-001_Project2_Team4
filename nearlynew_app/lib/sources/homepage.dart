@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: <Widget>[
           //Image carousel
-          //display,
+          display,
 
           //Padding Widget for Category
           new Padding(padding: const EdgeInsets.all(4.0),

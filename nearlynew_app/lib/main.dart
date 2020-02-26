@@ -6,6 +6,9 @@ void main()
   runApp(
     MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: Colors.green.shade900,
+        ),
         home:LoginPage(),
     )
 

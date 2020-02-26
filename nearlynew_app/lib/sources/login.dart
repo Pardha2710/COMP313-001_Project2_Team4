@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'homepage.dart';
+import 'register.dart';
 
 
 //Login Stateful page
@@ -19,11 +20,15 @@ class _LoginPageState extends State<LoginPage> {
   final formKey=GlobalKey<FormState>();
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
+
   SharedPreferences preferences;
 
   bool load=false;
   bool checkLoged=false;
 
+  var _users=['Buyer','Seller','Admin'];
+
+  var currentItem='Buyer';
  @override
  void initState(){
    super.initState();
@@ -44,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
         load=false;
       });
   }
-  Future checkSigning() async{
+  /*Future checkSigning() async{
    preferences= await SharedPreferences.getInstance();
 
    setState(() {
@@ -57,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
      accessToken: googleSignInAuthentication.accessToken,
      idToken: googleSignInAuthentication.idToken,
    );
+
 
    final AuthResult authResult = await firebaseAuth.signInWithCredential(credential);
    FirebaseUser firebaseUser= authResult.user;
@@ -102,125 +108,158 @@ class _LoginPageState extends State<LoginPage> {
      {
         Fluttertoast.showToast(msg: "Login Failed!");
      }
-  }
+  }*/
   @override
   Widget build(BuildContext context) {
+    //double height = MediaQuery.of(context).size.height / 3;
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Image.asset('images/back.jpeg',fit: BoxFit.fill,width: double.infinity),
+          Image.asset('images/back.jpeg',fit: BoxFit.fill,width: double.infinity,height:double.infinity),
           Container(
             color: Colors.black.withOpacity(.4),
             width: double.infinity,
             height: double.infinity,
           ),
-      Padding(
-        padding: const EdgeInsets.only(top:250),
-        child: Center(
-               child: Form(
-                 key: formKey,
-                 child: Column(
-                   children: <Widget>[
-                     Padding(
-                       padding: const EdgeInsets.all(8.0),
-                       child: Material(
-                         borderRadius: BorderRadius.circular(10.0),
-                         color: Colors.white.withOpacity(.8),
-                         elevation: 0,
-                         child: Padding(
-                           padding: const EdgeInsets.only(left:12.0),
-                           child: TextFormField(
-                             controller:emailController,
-                             decoration: InputDecoration(
-                               hintText: "Email ID",
-                             icon: Icon(Icons.email),),
-                             //Email Validation
-                             validator: (value){
-                               if(value.isEmpty)
-                               {
-                                 Pattern pattern=r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                                 RegExp rex=RegExp(pattern);
-                                 if(!rex.hasMatch(value))
-                                   return 'Invalid Email ID!';
-                                 else
-                                   return null;
-                               }
-                              },
-                           ),
-                         ),
-                       ),
-                     ),
-                     Padding(
-                       padding: const EdgeInsets.all(8.0),
-                       child: Material(
-                         borderRadius: BorderRadius.circular(10.0),
-                         color: Colors.white.withOpacity(.8),
-                         elevation: 0,
-                         child: Padding(
-                           padding: const EdgeInsets.only(left:12.0),
-                           child: TextFormField(
-                             controller:passwordController,
-                             decoration: InputDecoration(
-                               hintText: "Password",
-                               icon: Icon(Icons.lock),),
-                             //Password Validation
-                             validator: (value){
-                               if(value.isEmpty)
-                                 {
-                                   return 'Password Cannot be Empty!';
-                                 }
-                               else if(value.length<6)
-                                 {
-                                   return 'Password too short!';
-                                 }
-                               else
-                                 {
-                                   return null;
-                                 }
-                             },
+      Container(
+        alignment: Alignment.topCenter,
+        child: Image.asset('images/nearlyNew.png',width: 140,height: 350,
+            color: Color.fromRGBO(255, 255, 255, 0.5),
+            colorBlendMode: BlendMode.modulate),
+      ),
+      Center(
+        child: Padding(
+          padding: const EdgeInsets.only(top:250),
+          child: Center(
+                 child: Form(
+                   key: formKey,
+                   child: ListView(
+                     children: <Widget>[
 
+                       Padding(
+                         padding: const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                         child: Material(
+                           borderRadius: BorderRadius.circular(10.0),
+                           color: Colors.white.withOpacity(.8),
+                           elevation: 0,
+                           child: Padding(
+                             padding: const EdgeInsets.only(left:12.0),
+                             child: TextFormField(
+                               controller:emailController,
+                               decoration: InputDecoration(
+                                 hintText: "Email ID",
+                               icon: Icon(Icons.email),),
+                               //Email Validation
+                               validator: (value){
+                                 if(value.isEmpty)
+                                 {
+                                   Pattern pattern=r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                   RegExp rex=RegExp(pattern);
+                                   if(!rex.hasMatch(value))
+                                     return 'Invalid Email ID!';
+                                   else
+                                     return null;
+                                 }
+                                },
+                             ),
                            ),
                          ),
                        ),
-                     ),
-                     Padding(
-                       padding: const EdgeInsets.all(8.0),
-                       child: Material(
-                         borderRadius: BorderRadius.circular(20.0),
-                         color: Colors.lightGreen.withOpacity(.8),
-                         elevation: 0,
-                         child:MaterialButton(
-                           onPressed: (){},
-                           minWidth: MediaQuery.of(context).size.width,
-                           child: Text("Login",textAlign: TextAlign.center,
-                           style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,
-                           fontSize: 20),),
-                         )
+                       Padding(
+                         padding: const EdgeInsets.fromLTRB(14,8,14,8),
+                         child: Material(
+                           borderRadius: BorderRadius.circular(10.0),
+                           color: Colors.white.withOpacity(.8),
+                           elevation: 0,
+                           child: Padding(
+                             padding: const EdgeInsets.only(left:12.0),
+                             child: TextFormField(
+                               controller:passwordController,
+                               obscureText: true,
+                               decoration: InputDecoration(
+                                 hintText: "Password",
+                                 icon: Icon(Icons.lock),),
+                               //Password Validation
+                               validator: (value){
+                                 if(value.isEmpty)
+                                   {
+                                     return 'Password Cannot be Empty!';
+                                   }
+                                 else if(value.length<6)
+                                   {
+                                     return 'Password too short!';
+                                   }
+                                 else
+                                   {
+                                     return null;
+                                   }
+                               },
+
+                             ),
+                           ),
+                         ),
                        ),
-                     ),
-                     Container(),
-                     Divider(color: Colors.white,),
-                     Padding(
-                       padding: const EdgeInsets.all(8.0),
-                       child: Material(
+                       Center(
+                         child: DropdownButton<String>(
+                           style: TextStyle(color: Colors.green,
+                             fontSize: 18.0,
+                           fontWeight: FontWeight.bold),
+                             items: _users.map((String dropDownStringItem){
+                               return DropdownMenuItem<String>(
+                                 value: dropDownStringItem,
+                                 child: Text(dropDownStringItem),
+                               );
+                             }).toList(),
+                             onChanged: (
+                                 String newValueSelected
+                                 ){
+                               setState(() {
+                                 this.currentItem=newValueSelected;
+                               });
+                             },
+                             value: currentItem,
+                           ),
+                       ),
+                       Padding(
+                         padding: const EdgeInsets.fromLTRB(14,8,14,8),
+                         child: Material(
                            borderRadius: BorderRadius.circular(20.0),
-                           color: Colors.red.withOpacity(.8),
+                           color: Colors.lightGreen.withOpacity(.8),
                            elevation: 0,
                            child:MaterialButton(
-                             onPressed: (){
-                               checkSigning();
-                             },
+                             onPressed: (){},
                              minWidth: MediaQuery.of(context).size.width,
-                             child: Text("Google SingUp!",textAlign: TextAlign.center,
-                               style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,
-                                   fontSize: 20),),
+                             child: Text("Login",textAlign: TextAlign.center,
+                             style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,
+                             fontSize: 20),),
                            )
+                         ),
                        ),
-                     )
-                   ],
+                       Padding(
+                         padding: const EdgeInsets.all(8.0),
+                         child:
+                             InkWell(
+                               onTap: (){},
+                         child:Text("Forgot Password",textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)) ,
+
+                       ),
+                       //Expanded(child: Container()),
+                       Padding(
+                         padding: const EdgeInsets.all(8),
+                         child:
+                           InkWell(
+                             onTap: (){
+                               Navigator.pushReplacement(context, MaterialPageRoute(
+                                   builder: (context)=>Register()
+                               ));
+                             },
+                               child: Text("SignUp!",textAlign:TextAlign.center,style: TextStyle(color: Colors.deepOrange,fontWeight: FontWeight.bold),)),
+                       ),
+                     ],
+                   ),
                  ),
-               ),
-              ),
+                ),
+        ),
       ),
           Visibility(
             visible: load ?? true,
