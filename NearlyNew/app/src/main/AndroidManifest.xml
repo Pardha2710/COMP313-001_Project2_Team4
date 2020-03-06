@@ -21,6 +21,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,6 +32,12 @@
         <activity android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ResetPasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Adminmain"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Usermain"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Sellermain"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

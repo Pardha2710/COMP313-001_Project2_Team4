@@ -7,105 +7,156 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword;
-    private FirebaseAuth auth;
-    private ProgressBar progressBar;
-    private Button btnSignup, btnLogin, btnReset;
+    private AppCompatEditText inputEmail,inputPassword;
+    private AppCompatButton btnLogin;
+    private AppCompatTextView btnLinkToRegister;
+
+    private RadioButton radbut,radrole;
+
+    private RadioGroup roleval;
+    private RadioButton radioButton;
+    private String passw,role,name;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-
-        if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        }
-
-        // set the view now
         setContentView(R.layout.activity_login);
 
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnSignup = (Button) findViewById(R.id.btn_signup);
-        btnLogin = (Button) findViewById(R.id.btn_login);
-        btnReset = (Button) findViewById(R.id.btn_reset_password);
+        inputEmail =  findViewById(R.id.textEmail);
+        inputPassword = findViewById(R.id.textPassword);
+        roleval = findViewById(R.id.radioRole);
+        btnLogin = findViewById(R.id.appCompatButtonLogin);
+        btnLinkToRegister = findViewById(R.id.textViewLinkRegister);
 
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
 
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-            }
-        });
 
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
-            }
-        });
+        // Progress dialog
 
+
+        // Login button Click Event
         btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = inputEmail.getText().toString();
-                final String password = inputPassword.getText().toString();
 
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+            public void onClick(View view) {
+                String email = inputEmail.getText().toString().trim();
+                final String password = inputPassword.getText().toString().trim();
 
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                int selectedId = roleval.getCheckedRadioButtonId();
 
-                progressBar.setVisibility(View.VISIBLE);
+                // find the radiobutton by returned id
+                radrole = findViewById(selectedId);
 
-                //authenticate user
-                auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                progressBar.setVisibility(View.GONE);
-                                if (!task.isSuccessful()) {
-                                    // there was an error
-                                    if (password.length() < 6) {
-                                        inputPassword.setError(getString(R.string.minimum_password));
-                                    } else {
-                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
-                                    }
-                                } else {
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
+                String rolevv = radrole.getText().toString().trim();
+
+
+                if(rolevv.equals("User") || rolevv.equals("Seller")){
+
+
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+
+                reference.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                            passw = datas.child("password").getValue().toString();
+                            role = datas.child("role").getValue().toString();
+                        }
+
+                        if (passw != null) {
+
+                            // Toast.makeText(LoginActivity.this, passw, Toast.LENGTH_SHORT).show();
+
+                            if (passw.equals(password)) {
+                                // Toast.makeText(LoginActivity.this, "Password Write", Toast.LENGTH_LONG).show();
+
+                                if (role.equals("User")) {
+                                    Intent in = new Intent(LoginActivity.this, Usermain.class);
+                                    startActivity(in);
                                     finish();
+                                } else {
+
+                                    Intent in = new Intent(LoginActivity.this, Sellermain.class);
+                                    startActivity(in);
+                                    finish();
+
                                 }
+
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Password Wrong", Toast.LENGTH_LONG).show();
+
                             }
-                        });
+                        } else {
+                            Toast.makeText(LoginActivity.this, "User Not Registered.", Toast.LENGTH_LONG).show();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                        Toast.makeText(LoginActivity.this, "Not Able To Login", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            }else if(rolevv.equals("Admin")){
+
+                    if(email.equals("admin")){
+
+                        if(password.equals("password123")){
+
+                            Intent in = new Intent(LoginActivity.this,Adminmain.class);
+                            startActivity(in);
+                        }else{
+                            Toast.makeText(LoginActivity.this, "Admin Password Wrong", Toast.LENGTH_LONG).show();
+                        }
+
+                    }else{
+                        Toast.makeText(LoginActivity.this, "Admin Username Wrong", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+
+            }
+
+        });
+
+
+        // Link to Register Screen
+        btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),
+                        SignupActivity.class);
+                startActivity(i);
+                finish();
             }
         });
+
+
     }
 }
