@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                String email = inputEmail.getText().toString().trim();
+                final String email = inputEmail.getText().toString().trim();
                 final String password = inputPassword.getText().toString().trim();
 
                 int selectedId = roleval.getCheckedRadioButtonId();
@@ -72,57 +72,98 @@ public class LoginActivity extends AppCompatActivity {
                 String rolevv = radrole.getText().toString().trim();
 
 
-                if(rolevv.equals("User") || rolevv.equals("Seller")){
+                if(rolevv.equals("User")){
 
 
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+                                  DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 
-                reference.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot datas : dataSnapshot.getChildren()) {
-                            passw = datas.child("password").getValue().toString();
-                            role = datas.child("role").getValue().toString();
-                        }
+                    reference.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                                passw = datas.child("password").getValue().toString();
+                                role = datas.child("role").getValue().toString();
+                            }
 
-                        if (passw != null) {
+                            if (passw != null) {
 
-                            // Toast.makeText(LoginActivity.this, passw, Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(LoginActivity.this, passw, Toast.LENGTH_SHORT).show();
 
-                            if (passw.equals(password)) {
-                                // Toast.makeText(LoginActivity.this, "Password Write", Toast.LENGTH_LONG).show();
+                                if (passw.equals(password)) {
+                                    // Toast.makeText(LoginActivity.this, "Password Write", Toast.LENGTH_LONG).show();
 
-                                if (role.equals("User")) {
-                                    Intent in = new Intent(LoginActivity.this, Usermain.class);
-                                    startActivity(in);
-                                    finish();
+                                        Intent in = new Intent(LoginActivity.this, Usermain.class);
+                                        in.putExtra("emailval",email);
+                                        startActivity(in);
+                                        finish();
+
+
                                 } else {
-
-                                    Intent in = new Intent(LoginActivity.this, Sellermain.class);
-                                    startActivity(in);
-                                    finish();
+                                    Toast.makeText(LoginActivity.this, "Password Wrong", Toast.LENGTH_LONG).show();
 
                                 }
-
                             } else {
-                                Toast.makeText(LoginActivity.this, "Password Wrong", Toast.LENGTH_LONG).show();
-
+                                Toast.makeText(LoginActivity.this, "User Not Registered.", Toast.LENGTH_LONG).show();
                             }
-                        } else {
-                            Toast.makeText(LoginActivity.this, "User Not Registered.", Toast.LENGTH_LONG).show();
+
+
                         }
 
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
+                            Toast.makeText(LoginActivity.this, "Not Able To Login", Toast.LENGTH_LONG).show();
+                        }
+                    });
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+            }else if(rolevv.equals("Seller")){
 
-                        Toast.makeText(LoginActivity.this, "Not Able To Login", Toast.LENGTH_LONG).show();
-                    }
-                });
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("sellers");
 
-            }else if(rolevv.equals("Admin")){
+                    reference.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                                passw = datas.child("password").getValue().toString();
+                                role = datas.child("role").getValue().toString();
+                            }
+
+                            if (passw != null) {
+
+                                // Toast.makeText(LoginActivity.this, passw, Toast.LENGTH_SHORT).show();
+
+                                if (passw.equals(password)) {
+                                    // Toast.makeText(LoginActivity.this, "Password Write", Toast.LENGTH_LONG).show();
+
+
+
+                                        Intent in = new Intent(LoginActivity.this, Sellermain.class);
+                                        in.putExtra("emailval",email);
+                                        startActivity(in);
+                                        finish();
+
+
+
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Password Wrong", Toast.LENGTH_LONG).show();
+
+                                }
+                            } else {
+                                Toast.makeText(LoginActivity.this, "User Not Registered.", Toast.LENGTH_LONG).show();
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                            Toast.makeText(LoginActivity.this, "Not Able To Login", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+
+                }else if(rolevv.equals("Admin")){
 
                     if(email.equals("admin")){
 

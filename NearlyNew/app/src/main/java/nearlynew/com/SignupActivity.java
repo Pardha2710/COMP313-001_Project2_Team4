@@ -61,8 +61,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
 
-        // get reference to 'users' node
-        mFirebaseDatabase = mFirebaseInstance.getReference("users");
+
 
         initListeners();
 
@@ -148,6 +147,17 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         // TODO
         // In real apps this userId should be fetched
         // by implementing firebase auth
+
+
+        if(role.equals("User")) {
+
+            // get reference to 'users' node
+            mFirebaseDatabase = mFirebaseInstance.getReference("users");
+        }else{
+            // get reference to 'users' node
+            mFirebaseDatabase = mFirebaseInstance.getReference("sellers");
+        }
+
         if (TextUtils.isEmpty(userId)) {
             userId = mFirebaseDatabase.push().getKey();
         }
