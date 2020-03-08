@@ -18,6 +18,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 
+import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,6 +28,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Properties;
+import java.util.Random;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener  {
 
@@ -38,6 +42,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
+    private String emailval;
 
 
 
@@ -102,7 +107,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     private void registercheck(){
         String namef = fname.getText().toString().trim();
-        String emailval = email.getText().toString().trim();
+        emailval = email.getText().toString().trim();
         String password = pass.getText().toString().trim();
         String cpassword = cpass.getText().toString().trim();
         String number = phone.getText().toString().trim();
@@ -186,12 +191,68 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     return;
                 }
 
-                Toast.makeText(SignupActivity.this,"Registration Success. Please Login",Toast.LENGTH_LONG).show();
+                final int min = 1000;
+                final int max = 9999;
+                final int random = new Random().nextInt((max - min) + 1) + min;
 
-                Intent in = new Intent(SignupActivity.this,LoginActivity.class);
+                String msg = "Please Enter the following OTP to Succesfully Register with nearly New :"+ random;
+
+
+                BackgroundMail.newBuilder(SignupActivity.this)
+                        .withUsername("pardhasardhi4@gmail.com")
+                        .withPassword("pardhasardhi572")
+                        .withMailto(emailval)
+                        .withType(BackgroundMail.TYPE_PLAIN)
+                        .withSubject("OTP verification")
+                        .withBody(msg)
+                        .withOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
+                            @Override
+                            public void onSuccess() {
+                                //do some magic
+                                Toast.makeText(SignupActivity.this,"OTP Mail Sent",Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .withOnFailCallback(new BackgroundMail.OnFailCallback() {
+                            @Override
+                            public void onFail() {
+                               //do some magic
+                                Toast.makeText(SignupActivity.this,"OTP Mail Failed",Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .send();
+
+                try {
+                    /*
+                    GMailSender sender = new GMailSender("pardhasardhi4@gmail.com", "pardhasardhi572");
+                    sender.sendMail("OTP Verification from Nearly New",
+                            msg,
+                            "pardhasardhi4@gmail.com",
+                            emailval);
+
+                     */
+
+                   // Toast.makeText(SignupActivity.this,emailval,Toast.LENGTH_LONG).show();
+
+                } catch (Exception e) {
+                    Log.e("SendMail", e.getMessage(), e);
+                }
+
+
+
+
+
+              //  Toast.makeText(SignupActivity.this,"Registration Success. Please Enter Otp",Toast.LENGTH_LONG).show();
+
+
+
+                Intent in = new Intent(SignupActivity.this,OtpActivity.class);
+                in.putExtra("otpval",Integer.toString(random));
                 startActivity(in);
 
                 Log.e("Testing22", "User data is changed!" + user.name + ", " + user.email);
+
+
+
 
                 // Display newly updated name and email
                 //txtDetails.setText(user.name + ", " + user.email);

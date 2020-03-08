@@ -110,7 +110,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:checked="true"
-                android:text="User" />
+                android:text="Buyer" />
 
             <RadioButton
                 android:id="@+id/radioSeller"

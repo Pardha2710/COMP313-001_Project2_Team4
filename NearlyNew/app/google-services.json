@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "1062046840318",
-    "firebase_url": "https://nearlynew-f0bc0.firebaseio.com",
-    "project_id": "nearlynew-f0bc0",
-    "storage_bucket": "nearlynew-f0bc0.appspot.com"
+    "project_number": "381107058857",
+    "firebase_url": "https://nearlynew-9b69c.firebaseio.com",
+    "project_id": "nearlynew-9b69c",
+    "storage_bucket": "nearlynew-9b69c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1062046840318:android:76d2605447dd08521b3caf",
+        "mobilesdk_app_id": "1:381107058857:android:1b8664ddcd0436a11b91b8",
         "android_client_info": {
           "package_name": "nearlynew.com"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1062046840318-3desbn36e0lb1dc8sghbh0e6u0rptllb.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "nearlynew.com",
-            "certificate_hash": "af8f7445e57e4e2f88fe12292e20a7b2eb2c253d"
-          }
-        },
-        {
-          "client_id": "1062046840318-a1g261oj27ud51bdhbjf87m7vdf4eeio.apps.googleusercontent.com",
+          "client_id": "381107058857-kvsj0l4itvjd1pngo9i3i2eqb24lki2g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyANi1FR_IFFOGk1oAeOBnalq0fi4HNXyLI"
+          "current_key": "AIzaSyD51_arexadi4Z26RKvt65hRjBmxAMtHgw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1062046840318-a1g261oj27ud51bdhbjf87m7vdf4eeio.apps.googleusercontent.com",
+              "client_id": "381107058857-kvsj0l4itvjd1pngo9i3i2eqb24lki2g.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

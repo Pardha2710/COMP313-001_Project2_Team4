@@ -1,8 +1,16 @@
 package nearlynew.com;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import com.google.android.gms.*;
+
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,6 +24,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,17 +51,24 @@ import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
-public class NewproFragment extends Fragment {
+public class NewproFragment extends Fragment  {
 
-    private AppCompatEditText pname, price,compname;
-    private RadioGroup gender,role;
-    private RadioButton radbut,radrole;
+    private AppCompatEditText pname, price, compname;
+    private RadioGroup gender, role;
+    private RadioButton radbut, radrole;
     private AppCompatButton register;
     private Spinner sp1;
     String emailvv;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
+    protected LocationManager locationManager;
+    protected LocationListener locationListener;
+    protected Context context;
+
+    protected String latitude, longitude;
+    protected boolean gps_enabled, network_enabled;
+
 
     // Uri indicates, where the image will be picked from
     private Uri filePath;
@@ -64,9 +80,10 @@ public class NewproFragment extends Fragment {
     FirebaseStorage storage;
     StorageReference storageReference;
 
-    String[] cat = {"Select Category","Shirts","Dresses","Jackets","Jeans","Trousers","Skirts"};
+    String[] cat = {"Select Category", "Shirts", "Dresses", "Jackets", "Jeans", "Trousers", "Skirts"};
 
 
+    @SuppressLint("MissingPermission")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,7 +106,7 @@ public class NewproFragment extends Fragment {
         mFirebaseInstance = FirebaseDatabase.getInstance();
 
         //Creating the ArrayAdapter instance having the country list
-        ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,cat);
+        ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, cat);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         sp1.setAdapter(aa);
@@ -100,7 +117,8 @@ public class NewproFragment extends Fragment {
         // find the radiobutton by returned id
         radbut = view.findViewById(selectedId);
 
-
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
 
 
 
