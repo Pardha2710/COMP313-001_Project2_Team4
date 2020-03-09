@@ -173,7 +173,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:textColor="#000"
-            android:text="Aleady Registered ?.Click here to Login"
+            android:text="@string/already"
             android:textSize="16sp" />
 
 

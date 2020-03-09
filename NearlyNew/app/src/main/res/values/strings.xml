@@ -16,10 +16,10 @@
     <string name="hint_password">Password</string>
     <string name="hint_name">Fullname</string>
     <string name="btn_login">LOGIN</string>
-    <string name="btn_link_to_register">Not a member? Get registered in Firebase now!</string>
-    <string name="btn_link_to_login">Already registered. Login Me!</string>
-    <string name="title_activity_reset_password">ResetPasswordActivity</string>
-    <string name="btn_forgot_password">Forgot your password?</string>
+    <string name="btn_link_to_register"><u>Not a member? Get registered in Firebase now!</u></string>
+    <string name="btn_link_to_login"><u>Already registered. Login Me!</u></string>
+    <string name="title_activity_reset_password"><u>ResetPasswordActivity</u></string>
+    <string name="btn_forgot_password"><u>Forgot your password?</u></string>
     <string name="btn_reset_password">Reset Password</string>
     <string name="btn_back"><![CDATA[<< Back]]></string>
     <string name="hint_new_email">New Email</string>
@@ -27,8 +27,10 @@
     <string name="btn_send">Send</string>
     <string name="btn_remove">Remove</string>
     <string name="btn_sign_out">Sign Out</string>
-    <string name="lbl_forgot_password">Forgot password?</string>
+    <string name="lbl_forgot_password"><u>Forgot password?</u></string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
+    <string name="already"><u>Aleady Registered ?.Click here to Login</u></string>
+    <string name="register"><u>Click here to register</u></string>
 </resources>

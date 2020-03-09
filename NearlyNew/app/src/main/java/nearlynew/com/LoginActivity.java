@@ -77,11 +77,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLinkForget=findViewById(R.id.textViewLinkForget);
         iv1 = findViewById(R.id.gsign);
 
-
-
-        // Progress dialog
-
-
         // Login button Click Event
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -160,14 +155,10 @@ public class LoginActivity extends AppCompatActivity {
                                 if (passw.equals(password)) {
                                     // Toast.makeText(LoginActivity.this, "Password Write", Toast.LENGTH_LONG).show();
 
-
-
                                         Intent in = new Intent(LoginActivity.this, Sellermain.class);
                                         in.putExtra("emailval",email);
                                         startActivity(in);
                                         finish();
-
-
 
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Password Wrong", Toast.LENGTH_LONG).show();
@@ -222,7 +213,6 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
         // Link to Forget Screen
         btnLinkForget.setOnClickListener(new View.OnClickListener() {
@@ -279,7 +269,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         //getting the auth credential
@@ -295,6 +285,11 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             Toast.makeText(LoginActivity.this, "Signed In", Toast.LENGTH_SHORT).show();
+                            Intent in = new Intent(LoginActivity.this,Usermain.class);
+                            in.putExtra("emailval",acct);
+                            startActivity(in);
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

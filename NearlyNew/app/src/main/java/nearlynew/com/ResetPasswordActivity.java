@@ -1,6 +1,5 @@
 package nearlynew.com;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,19 +27,16 @@ public class ResetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
 
-        inputEmail = findViewById(R.id.email);
-        btnReset = findViewById(R.id.btn_reset_password);
-        btnBack = findViewById(R.id.btn_back);
-        progressBar = findViewById(R.id.progressBar);
+        inputEmail = (EditText) findViewById(R.id.email);
+        btnReset = (Button) findViewById(R.id.btn_reset_password);
+        btnBack = (Button) findViewById(R.id.btn_back);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         auth = FirebaseAuth.getInstance();
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),
-                        LoginActivity.class);
-                startActivity(i);
                 finish();
             }
         });

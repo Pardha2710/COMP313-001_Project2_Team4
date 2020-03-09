@@ -195,8 +195,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 final int max = 9999;
                 final int random = new Random().nextInt((max - min) + 1) + min;
 
-                String msg = "Please Enter the following OTP to Succesfully Register with nearly New :"+ random;
-
+                String msg = "Please Enter the following OTP to Succesfully Register with nearly New :"+ Integer.toString(random);
 
                 BackgroundMail.newBuilder(SignupActivity.this)
                         .withUsername("pardhasardhi4@gmail.com")
@@ -238,12 +237,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 }
 
 
-
-
-
               //  Toast.makeText(SignupActivity.this,"Registration Success. Please Enter Otp",Toast.LENGTH_LONG).show();
-
-
 
                 Intent in = new Intent(SignupActivity.this,OtpActivity.class);
                 in.putExtra("otpval",Integer.toString(random));
