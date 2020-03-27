@@ -110,7 +110,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:checked="true"
-                android:text="Buyer" />
+                android:text="User" />
 
             <RadioButton
                 android:id="@+id/radioSeller"
@@ -173,7 +173,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:textColor="#000"
-            android:text="@string/already"
+            android:text="Aleady Registered ?.Click here to Login"
             android:textSize="16sp" />
 
 

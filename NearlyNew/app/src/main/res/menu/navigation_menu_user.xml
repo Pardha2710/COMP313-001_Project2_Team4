@@ -5,7 +5,7 @@
             android:icon="@drawable/ic_home">
         </item>
         <item android:id="@+id/products"
-            android:title="My Products"
+            android:title="Wish List"
             android:icon="@drawable/ic_folder">
         </item>
     </group>

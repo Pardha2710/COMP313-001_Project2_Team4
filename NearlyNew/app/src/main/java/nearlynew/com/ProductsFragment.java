@@ -1,8 +1,11 @@
 package nearlynew.com;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -33,125 +37,110 @@ import java.util.Map;
 
 public class ProductsFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
-    private FirebaseRecyclerAdapter adapter;
+    private RecyclerView mPeopleRV;
+    private DatabaseReference mDatabase;
+    private FirebaseRecyclerAdapter<Products, ProductsViewHolder> mPeopleRVAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.productsfrag, container, false);
 
-        recyclerView = rootView.findViewById(R.id.list);
+
+        //"News" here will reflect what you have called your database in Firebase.
+        mDatabase = FirebaseDatabase.getInstance().getReference("products");
+        mDatabase.keepSynced(true);
+
+        mPeopleRV = rootView.findViewById(R.id.myRecycleView);
+
+        DatabaseReference personsRef = FirebaseDatabase.getInstance().getReference("products");
+        Query personsQuery = personsRef.orderByKey();
+
+        mPeopleRV.hasFixedSize();
+        mPeopleRV.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setHasFixedSize(true);
-        fetch();
+        FirebaseRecyclerOptions personsOptions = new FirebaseRecyclerOptions.Builder<Products>().setQuery(personsQuery, Products.class).build();
 
-        return rootView;
-    }
+        Log.d("Options"," data : "+personsOptions);
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public LinearLayout root;
-        public TextView txtTitle;
-        public TextView txtDesc,textPrice;
-        public ImageView imgv;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            root = itemView.findViewById(R.id.list_main);
-            txtTitle = itemView.findViewById(R.id.list_title);
-            txtDesc = itemView.findViewById(R.id.list_desc);
-            textPrice = itemView.findViewById(R.id.textPrice);
-            imgv = itemView.findViewById(R.id.imageView2);
-        }
-
-        public void setTxtTitle(String string) {
-            txtTitle.setText(string);
-        }
-
-
-        public void setTxtDesc(String string) {
-            txtDesc.setText(string);
-        }
-        public void setTxtPrice(String string) {
-            textPrice.setText(string);
-        }
-
-        public void setImage(String string) throws IOException {
-            URL newurl = new URL(string);
-            Bitmap mIcon_val = BitmapFactory.decodeStream(newurl.openConnection() .getInputStream());
-            imgv.setImageBitmap(mIcon_val);
-        }
-    }
-
-    private void fetch() {
-        Query query = FirebaseDatabase.getInstance()
-                .getReference()
-                .child("posts");
-
-        FirebaseRecyclerOptions<Product> options =
-                new FirebaseRecyclerOptions.Builder<Product>()
-                        .setQuery(query, new SnapshotParser<Product>() {
-                            @NonNull
-                            @Override
-
-                            public Product parseSnapshot(@NonNull DataSnapshot snapshot) {
-                                return new Product(snapshot.child("product_name").getValue().toString(),
-                                        snapshot.child("product_category").getValue().toString(),
-                                        snapshot.child("product_comp").getValue().toString(),
-                                        snapshot.child("product_price").getValue().toString(),
-                                        snapshot.child("product_type").getValue().toString(),
-                                        snapshot.child("product_img1").getValue().toString()
-                                );
-                            }
-                        })
-                        .build();
-
-        adapter = new FirebaseRecyclerAdapter<Product, ViewHolder>(options) {
+        mPeopleRVAdapter = new FirebaseRecyclerAdapter<Products, ProductsViewHolder>(personsOptions) {
             @Override
-            public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.list_item, parent, false);
+            protected void onBindViewHolder(ProductsViewHolder holder, final int position, final Products model) {
+                holder.setTitle(model.getTitle());
+                holder.setDesc(model.getcomp());
+                holder.setPrice(model.getprice());
+                holder.setImage(getContext(), model.getImage());
 
-                return new ViewHolder(view);
-            }
-
-
-            @Override
-            protected void onBindViewHolder(ViewHolder holder, final int position, Product product) {
-                holder.setTxtTitle(product.getPname());
-                holder.setTxtDesc(product.getType());
-                holder.setTxtPrice(product.getPrice());
-                try {
-                    holder.setImage(product.getImglnk());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                holder.root.setOnClickListener(new View.OnClickListener() {
+                holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        Toast.makeText(getActivity(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+                    public void onClick(View v) {
+                        //final String url = model.getUrl();
+                        // Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
+                        // intent.putExtra("id", url);
+                        // startActivity(intent);
                     }
                 });
             }
 
+            @Override
+            public ProductsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.prod_rows, parent, false);
+
+                return new ProductsViewHolder(view);
+            }
         };
-        recyclerView.setAdapter(adapter);
+
+        mPeopleRV.setAdapter(mPeopleRVAdapter);
+        mPeopleRVAdapter.startListening();
+
+
+
+
+        return rootView;
     }
+
 
     @Override
     public void onStart() {
         super.onStart();
-        adapter.startListening();
+        mPeopleRVAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
+        mPeopleRVAdapter.stopListening();
+
+
     }
+
+    public static class ProductsViewHolder extends RecyclerView.ViewHolder{
+        View mView;
+        public ProductsViewHolder(View itemView){
+            super(itemView);
+            mView = itemView;
+        }
+        public void setTitle(String title){
+            TextView post_title = (TextView)mView.findViewById(R.id.post_title);
+            post_title.setText(title);
+        }
+        public void setDesc(String desc){
+            TextView post_desc = (TextView)mView.findViewById(R.id.post_desc);
+            post_desc.setText(desc);
+        }
+        public void setPrice(String price){
+            TextView post_price = (TextView)mView.findViewById(R.id.post_price);
+            post_price.setText(price);
+        }
+        public void setImage(Context ctx, String image){
+            ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
+            Picasso.get().load(image).into(post_image);
+                    //wi(ctx).load(image).into(post_image);
+        }
+    }
+
+
 }

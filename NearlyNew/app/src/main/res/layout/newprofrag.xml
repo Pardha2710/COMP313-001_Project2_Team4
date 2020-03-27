@@ -60,44 +60,12 @@
             android:maxLines="1"
             android:textColor="@android:color/black" />
 
-        <RadioGroup
-            android:id="@+id/radioSex"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:orientation="vertical">
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Category" />
 
-            <RadioButton
-                android:id="@+id/radioMale"
-                android:layout_width="96dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:checked="true"
-                android:text="Ladies" />
-
-            <RadioButton
-                android:id="@+id/radioFemale"
-                android:layout_width="96dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:text="Gents" />
-            <RadioButton
-                android:id="@+id/radioKid"
-                android:layout_width="96dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:text="Kids" />
-
-        </RadioGroup>
 
 
         <Spinner

@@ -2,7 +2,11 @@ package nearlynew.com;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -12,10 +16,18 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Sellermain extends AppCompatActivity  {
 
     DrawerLayout drawerLayout;
+    String emailvv, emailval,nameval;
+    TextView name,email;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +37,51 @@ public class Sellermain extends AppCompatActivity  {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        emailvv = getIntent().getExtras().getString("emailval");
+
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+
+
         NavigationView nav_view = findViewById(R.id.nav_view);
+        View header = nav_view.getHeaderView(0);
+        name = header.findViewById(R.id.fullname);
+        email = header.findViewById(R.id.emailid);
+
+
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("sellers");
+
+
+        reference.orderByChild("email").equalTo(emailvv).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+
+                for (DataSnapshot zoneSnapshot: dataSnapshot.getChildren()) {
+
+                    nameval = zoneSnapshot.child("name").getValue(String.class);
+                    emailval = zoneSnapshot.child("email").getValue(String.class);
+
+
+                }
+
+                name.setText(nameval);
+                email.setText(emailval);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                Toast.makeText(Sellermain.this, "Not Able To Connect", Toast.LENGTH_LONG).show();
+            }
+        });
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
 
         nav_view.setCheckedItem(R.id.home);
@@ -46,8 +97,10 @@ public class Sellermain extends AppCompatActivity  {
 
                         break;
                     case R.id.products:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProductsFragment()).commit();
-
+                        Intent in1 = new Intent(Sellermain.this,ProductsActivity.class);
+                        in1.putExtra("emailval",emailvv);
+                        startActivity(in1);
+                        finish();
                         break;
                     case R.id.newpro:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NewproFragment()).commit();

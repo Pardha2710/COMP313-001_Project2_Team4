@@ -7,10 +7,12 @@
     android:gravity="bottom"
     android:padding="20dp">
     <ImageView
+        android:id="@+id/img1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher_round"></ImageView>
     <TextView
+        android:id="@+id/fullname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Full Name"
@@ -18,6 +20,7 @@
         android:textSize="20sp"
         android:textColor="#FFFFFF"/>
     <TextView
+        android:id="@+id/emailid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email Id"

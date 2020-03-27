@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,21 +41,21 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private AppCompatEditText inputEmail,inputPassword;
-    private AppCompatButton btnLogin;
-    private AppCompatTextView btnLinkToRegister,btnLinkForget;
+    private EditText inputEmail,inputPassword;
+    private Button btnLogin;
 
     private RadioButton radbut,radrole;
 
     private RadioGroup roleval;
     private RadioButton radioButton;
     private String passw,role,name;
+    private TextView etreg;
 
     //a constant for detecting the login intent result
     private static final int RC_SIGN_IN = 234;
 
     //Tag for the logs optional
-    private static final String TAG = "simplifiedcoding";
+    private static final String TAG = "Nearly New";
 
     //creating a GoogleSignInClient object
     GoogleSignInClient mGoogleSignInClient;
@@ -73,9 +74,13 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.textPassword);
         roleval = findViewById(R.id.radioRole);
         btnLogin = findViewById(R.id.appCompatButtonLogin);
-        btnLinkToRegister = findViewById(R.id.textViewLinkRegister);
-        btnLinkForget=findViewById(R.id.textViewLinkForget);
-        iv1 = findViewById(R.id.gsign);
+        etreg = findViewById(R.id.textViewLinkRegister);
+        //iv1 = findViewById(R.id.gsign);
+
+
+
+        // Progress dialog
+
 
         // Login button Click Event
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                 String rolevv = radrole.getText().toString().trim();
 
 
-                if(rolevv.equals("User")){
+                if(rolevv.equals("Byer")){
 
 
                                   DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
@@ -155,10 +160,14 @@ public class LoginActivity extends AppCompatActivity {
                                 if (passw.equals(password)) {
                                     // Toast.makeText(LoginActivity.this, "Password Write", Toast.LENGTH_LONG).show();
 
+
+
                                         Intent in = new Intent(LoginActivity.this, Sellermain.class);
                                         in.putExtra("emailval",email);
                                         startActivity(in);
                                         finish();
+
+
 
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Password Wrong", Toast.LENGTH_LONG).show();
@@ -204,22 +213,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
         // Link to Register Screen
-        btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
+        etreg.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),
                         SignupActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
-
-        // Link to Forget Screen
-        btnLinkForget.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),
-                        ResetPasswordActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -238,12 +236,18 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
 
+        /*
+
+
         iv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn();
             }
         });
+
+
+         */
 
 
     }

@@ -45,6 +45,9 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".OtpActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ProductsActivity"
+            android:parentActivityName=".Sellermain"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

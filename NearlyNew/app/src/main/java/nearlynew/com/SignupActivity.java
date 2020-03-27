@@ -27,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Properties;
@@ -147,8 +148,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void createUser(String name, String email, String phone, String password,
-                            String role, String active, String gender) {
+    private void createUser(final String name, final String email, final String phone, final String password,
+                            final String role, final String active, final String gender) {
         // TODO
         // In real apps this userId should be fetched
         // by implementing firebase auth
@@ -156,22 +157,83 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         if(role.equals("User")) {
 
+
+            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference userNameRef = rootRef.child("users");
+            Query queries=userNameRef.orderByChild("email").equalTo(email);
+            ValueEventListener eventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(!dataSnapshot.exists()) {
+                        //create new user
+                        mFirebaseDatabase = mFirebaseInstance.getReference("users");
+                        if (TextUtils.isEmpty(userId)) {
+                            userId = mFirebaseDatabase.push().getKey();
+                        }
+
+
+
+                        User user = new User(name, email, phone, password, role, active, gender);
+
+                        mFirebaseDatabase.child(userId).setValue(user);
+
+                        addUserChangeListener();
+
+                    }else{
+                        Toast.makeText(SignupActivity.this, "Buyer Already Registered. Please Login",Toast.LENGTH_LONG).show();
+                        Intent in = new Intent(SignupActivity.this,LoginActivity.class);
+                        startActivity(in);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            };
+            queries.addListenerForSingleValueEvent(eventListener);
+
             // get reference to 'users' node
-            mFirebaseDatabase = mFirebaseInstance.getReference("users");
+
         }else{
             // get reference to 'users' node
-            mFirebaseDatabase = mFirebaseInstance.getReference("sellers");
+          //  mFirebaseDatabase = mFirebaseInstance.getReference("sellers");
+            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference userNameRef = rootRef.child("sellers");
+            Query queries=userNameRef.orderByChild("email").equalTo(email);
+            ValueEventListener eventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(!dataSnapshot.exists()) {
+                        //create new user
+                        mFirebaseDatabase = mFirebaseInstance.getReference("sellers");
+
+                        if (TextUtils.isEmpty(userId)) {
+                            userId = mFirebaseDatabase.push().getKey();
+                        }
+
+
+
+                        User user = new User(name, email, phone, password, role, active, gender);
+
+                        mFirebaseDatabase.child(userId).setValue(user);
+
+                        addUserChangeListener();
+
+                    }else{
+                        Toast.makeText(SignupActivity.this, "Seller Already Registered. Please Login",Toast.LENGTH_LONG).show();
+                        Intent in = new Intent(SignupActivity.this,LoginActivity.class);
+                        startActivity(in);
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            };
+            queries.addListenerForSingleValueEvent(eventListener);
         }
 
-        if (TextUtils.isEmpty(userId)) {
-            userId = mFirebaseDatabase.push().getKey();
-        }
 
-        User user = new User(name, email, phone, password, role, active, gender);
 
-        mFirebaseDatabase.child(userId).setValue(user);
-
-        addUserChangeListener();
     }
 
     /**
@@ -196,6 +258,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 final int random = new Random().nextInt((max - min) + 1) + min;
 
                 String msg = "Please Enter the following OTP to Succesfully Register with nearly New :"+ Integer.toString(random);
+
 
                 BackgroundMail.newBuilder(SignupActivity.this)
                         .withUsername("pardhasardhi4@gmail.com")
@@ -237,7 +300,12 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 }
 
 
+
+
+
               //  Toast.makeText(SignupActivity.this,"Registration Success. Please Enter Otp",Toast.LENGTH_LONG).show();
+
+
 
                 Intent in = new Intent(SignupActivity.this,OtpActivity.class);
                 in.putExtra("otpval",Integer.toString(random));

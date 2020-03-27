@@ -7,10 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
@@ -56,32 +59,37 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.app.Activity.RESULT_OK;
 
 public class NewproFragment extends Fragment {
 
     private AppCompatEditText pname, price, compname;
-    private RadioGroup gender, role;
-    private RadioButton radbut, radrole;
+
     private AppCompatButton register;
-    private Spinner sp1;
+    private Spinner sp1,sp2;
     String emailvv;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
-    protected LocationManager locationManager;
-    protected LocationListener locationListener;
-    protected Context context;
-    private String product_location;
 
-    protected String latitude, longitude;
-    protected boolean gps_enabled, network_enabled;
 
-    int PERMISSION_ID = 44;
-    FusedLocationProviderClient mFusedLocationClient;
-    TextView latTextView, lonTextView;
+
+    double latitude, longitude;
+    private TextView tvLocation;
+    private Button btnGetLocation;
+    private FusedLocationProviderClient locationProviderClient;
+    private Geocoder geocoder;
+    private List<Address> addresses;
+
+    String city;
+
+
+    String cate;
 
 
     // Uri indicates, where the image will be picked from
@@ -95,6 +103,7 @@ public class NewproFragment extends Fragment {
     StorageReference storageReference;
 
     String[] cat = {"Select Category", "Shirts", "Dresses", "Jackets", "Jeans", "Trousers", "Skirts"};
+    String[] typ ={"Select Type","Ladies","Gents","Kids"};
 
 
     @Override
@@ -103,20 +112,58 @@ public class NewproFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.newprofrag, container, false);
 
+
+
         pname = view.findViewById(R.id.textPname);
         price = view.findViewById(R.id.textPrice);
         compname = view.findViewById(R.id.textComp);
-        gender = view.findViewById(R.id.radioSex);
+
         register = view.findViewById(R.id.appCompatRegister);
 
         sp1 = view.findViewById(R.id.spinner);
+        sp2 = view.findViewById(R.id.spinner1);
 
         emailvv = getActivity().getIntent().getExtras().getString("emailval");
+
+        requestPermission();
 
         // get the Firebase  storage reference
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         mFirebaseInstance = FirebaseDatabase.getInstance();
+
+        locationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+
+        geocoder = new Geocoder(getActivity(), Locale.getDefault());
+
+
+        locationProviderClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+
+                if (location != null) {
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+
+                    try {
+
+                        addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+
+                        city = addresses.get(0).getLocality();
+                        Log.e("city", city);
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Log.e("MainActivity", e.getMessage());
+                    }
+
+                }
+            }
+        });
+
 
         //Creating the ArrayAdapter instance having the country list
         ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, cat);
@@ -124,15 +171,16 @@ public class NewproFragment extends Fragment {
         //Setting the ArrayAdapter data on the Spinner
         sp1.setAdapter(aa);
 
+        //Creating the ArrayAdapter instance having the country list
+        ArrayAdapter ab = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, typ);
+        ab.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        sp2.setAdapter(ab);
 
-        int selectedId = gender.getCheckedRadioButtonId();
 
-        // find the radiobutton by returned id
-        radbut = view.findViewById(selectedId);
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
-        getLastLocation();
+
 
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -213,7 +261,22 @@ public class NewproFragment extends Fragment {
                                 String product_comp = compname.getText().toString();
                                 String product_type = sp1.getSelectedItem().toString();
                                 String product_email = emailvv;
+                                String product_category = sp2.getSelectedItem().toString();
                                 String product_img1 = URL;
+                                String product_location=city;
+
+
+                                String vall = product_name+","+product_email+","+product_price
+                                        +","+product_category+","+product_type+","+product_comp
+                                        +","+product_img1+","+product_location;
+
+
+                                Toast.makeText(getActivity(),vall,Toast.LENGTH_LONG).show();
+
+                                Log.i("Products Info",vall);
+
+
+
 
 
 
@@ -223,7 +286,7 @@ public class NewproFragment extends Fragment {
 
                                 // find the radiobutton by returned id
 
-                                String product_category = radbut.getText().toString().trim();
+                               // String product_category = radbut.getText().toString().trim();
 
                                 if (TextUtils.isEmpty(userId)) {
                                     userId = mFirebaseDatabase.push().getKey();
@@ -235,6 +298,8 @@ public class NewproFragment extends Fragment {
                                 mFirebaseDatabase.child(userId).setValue(imageUpload);
 
                                 addUserChangeListener();
+
+
 
                                 //Toast.makeText(getActivity(), URL, Toast.LENGTH_LONG).show();
                             }
@@ -259,11 +324,11 @@ public class NewproFragment extends Fragment {
                 // Check for null
                 if (user == null) {
                     Log.e("Testing11", "User data is null!");
-                    Toast.makeText(getActivity(),"Registration Failed",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"Product Upload Failed",Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                Toast.makeText(getActivity(),"Registration Success. Please Login",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Product Uploaded Sucesfully.",Toast.LENGTH_LONG).show();
 
                Intent in = new Intent(getActivity(),Sellermain.class);
                in.putExtra("emailval",emailvv);
@@ -271,14 +336,7 @@ public class NewproFragment extends Fragment {
 
                 Log.e("Testing22", "User data is changed!" + user.name + ", " + user.email);
 
-                // Display newly updated name and email
-                //txtDetails.setText(user.name + ", " + user.email);
 
-                // clear edit text
-                // inputEmail.setText("");
-                //inputName.setText("");
-
-                //toggleButton();
             }
 
             @Override
@@ -290,104 +348,9 @@ public class NewproFragment extends Fragment {
     }
 
 
-    @SuppressLint("MissingPermission")
-    private void getLastLocation(){
-        if (checkPermissions()) {
-            if (isLocationEnabled()) {
-                mFusedLocationClient.getLastLocation().addOnCompleteListener(
-                        new OnCompleteListener<Location>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Location> task) {
-                                Location location = task.getResult();
-                                if (location == null) {
-                                    requestNewLocationData();
-                                } else {
-                                    latTextView.setText(location.getLatitude()+"");
-                                    lonTextView.setText(location.getLongitude()+"");
-                                }
-                            }
-                        }
-                );
-            } else {
-                Toast.makeText(getActivity(), "Turn on location", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        } else {
-            requestPermissions();
-        }
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(getActivity(), new String[]{ACCESS_FINE_LOCATION}, 1);
     }
-
-
-    @SuppressLint("MissingPermission")
-    private void requestNewLocationData(){
-
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(0);
-        mLocationRequest.setFastestInterval(0);
-        mLocationRequest.setNumUpdates(1);
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        mFusedLocationClient.requestLocationUpdates(
-                mLocationRequest, mLocationCallback,
-                Looper.myLooper()
-        );
-
-    }
-
-    private LocationCallback mLocationCallback = new LocationCallback() {
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            Location mLastLocation = locationResult.getLastLocation();
-            //latTextView.setText(mLastLocation.getLatitude()+"");
-            //lonTextView.setText(mLastLocation.getLongitude()+"");
-        }
-    };
-
-    private boolean checkPermissions() {
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        return false;
-    }
-
-    private void requestPermissions() {
-        ActivityCompat.requestPermissions(
-                getActivity(),
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
-                PERMISSION_ID
-        );
-    }
-
-    private boolean isLocationEnabled() {
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-                LocationManager.NETWORK_PROVIDER
-        );
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_ID) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getLastLocation();
-            }
-        }
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        if (checkPermissions()) {
-            getLastLocation();
-        }
-
-    }
-
-
 
 
 }
