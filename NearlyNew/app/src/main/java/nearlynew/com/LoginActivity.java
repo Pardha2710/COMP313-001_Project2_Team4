@@ -1,6 +1,7 @@
 package nearlynew.com;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText inputEmail,inputPassword;
     private Button btnLogin;
+    private TextView tv;
 
     private RadioButton radbut,radrole;
 
@@ -75,7 +77,16 @@ public class LoginActivity extends AppCompatActivity {
         roleval = findViewById(R.id.radioRole);
         btnLogin = findViewById(R.id.appCompatButtonLogin);
         etreg = findViewById(R.id.textViewLinkRegister);
-        //iv1 = findViewById(R.id.gsign);
+        iv1 = findViewById(R.id.imageView3);
+        tv = findViewById(R.id.textViewLinkForget);
+
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(LoginActivity.this,ForgetPass.class);
+                startActivity(in);
+            }
+        });
 
 
 
@@ -97,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                 String rolevv = radrole.getText().toString().trim();
 
 
-                if(rolevv.equals("Byer")){
+                if(rolevv.equals("Buyer")){
 
 
                                   DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
@@ -236,7 +247,7 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
 
-        /*
+
 
 
         iv1.setOnClickListener(new View.OnClickListener() {
@@ -247,7 +258,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-         */
+
 
 
     }
@@ -288,10 +299,21 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
+                            String emaill = user.getEmail(); // Valid email
+                            String nameva = user.getDisplayName(); // null
+                            Uri userimg = user.getPhotoUrl(); // null
+                            
+
+                            Toast.makeText(LoginActivity.this,emaill+' '+nameva,Toast.LENGTH_LONG).show();
+
+                            /*
+
                             Toast.makeText(LoginActivity.this, "Signed In", Toast.LENGTH_SHORT).show();
                             Intent in = new Intent(LoginActivity.this,Usermain.class);
                             in.putExtra("emailval",acct);
                             startActivity(in);
+
+                             */
 
 
                         } else {

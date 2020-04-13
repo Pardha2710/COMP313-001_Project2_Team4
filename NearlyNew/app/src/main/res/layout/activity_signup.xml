@@ -1,4 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/appCompatRegister"
+        android:layout_width="74dp"
+        android:layout_height="83dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_btn_login"
+        app:layout_constraintBottom_toTopOf="@+id/textlogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textConfirmPassword" />
+
+    <EditText
+        android:id="@+id/textPassword"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginEnd="21dp"
+        android:background="@drawable/bg_txt_password"
+        android:fontFamily="@font/montserrat_semibold"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:paddingLeft="60dp"
+        android:textColor="@color/colorText"
+        android:textSize="40px"
+        app:layout_constraintBottom_toTopOf="@+id/textConfirmPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+
+    <EditText
+        android:id="@+id/textConfirmPassword"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="23dp"
+        android:background="@drawable/bg_txt_password"
+        android:fontFamily="@font/montserrat_semibold"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:paddingLeft="60dp"
+        android:textColor="@color/colorText"
+        android:textSize="40px"
+        app:layout_constraintBottom_toTopOf="@+id/appCompatRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textPassword" />
+
+    <EditText
+        android:id="@+id/textFname"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/bg_txt_username"
+        android:fontFamily="@font/montserrat_semibold"
+        android:hint="Full Name"
+        android:paddingLeft="60dp"
+        android:textColor="@color/colorText"
+        android:textSize="40px"
+        app:layout_constraintBottom_toTopOf="@+id/textPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/textPhone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/bg_txt_phone"
+        android:fontFamily="@font/montserrat_semibold"
+        android:hint="Phone"
+        android:paddingLeft="60dp"
+        android:textColor="@color/colorText"
+        android:textSize="40px"
+        app:layout_constraintBottom_toTopOf="@+id/radioSex"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textFname" />
+
+    <EditText
+        android:id="@+id/textEmail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginEnd="21dp"
+        android:background="@drawable/bg_txt_email"
+        android:fontFamily="@font/montserrat_semibold"
+        android:hint="Email"
+        android:paddingLeft="60dp"
+        android:textColor="@color/colorText"
+        android:textSize="40px"
+        app:layout_constraintBottom_toTopOf="@+id/textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioSex" />
+
+
+    <RadioGroup
+        android:id="@+id/radioSex"
+        android:layout_width="361dp"
+        android:layout_height="63dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="59dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/textEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textPhone">
+
+
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="149dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:checked="true"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="210dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:text="Female" />
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/radioRole"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginEnd="19dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <RadioButton
+            android:id="@+id/radioUser"
+            android:layout_width="145dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:checked="true"
+            android:text="Buyer" />
+
+        <RadioButton
+            android:id="@+id/radioSeller"
+            android:layout_width="210dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:text="Seller" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/montserrat_light"
+        android:text="Your Used Cloth Store"
+        android:textColor="@color/colorText"
+        android:textSize="32px"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="84dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Nearly New"
+        android:textColor="@color/colorText"
+        android:textSize="96px"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginBottom="17dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Register"
+        android:textColor="@color/colorText"
+        android:textSize="96px"
+        app:layout_constraintBottom_toTopOf="@+id/textFname"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="33dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:fontFamily="@font/montserrat_light"
+        android:text="Aleady Registered ?.Click here to Login"
+        android:textColor="@color/colorText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/appCompatRegister"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatRegister" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+<!--
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -180,3 +414,5 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.core.widget.NestedScrollView>
+
+-->

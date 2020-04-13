@@ -1,0 +1,133 @@
+package nearlynew.com;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+public class AbuyersFragment extends Fragment {
+
+    private RecyclerView mPeopleRV;
+    private DatabaseReference mDatabase;
+    private FirebaseRecyclerAdapter<Buyerslist, AbuyersFragment.NewsViewHolder> mPeopleRVAdapter;
+
+    public AbuyersFragment() {
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.buyersfrag, container, false);
+
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
+        mDatabase.keepSynced(true);
+
+        mPeopleRV = (RecyclerView) view.findViewById(R.id.myRecycleView);
+
+        DatabaseReference personsRef = FirebaseDatabase.getInstance().getReference("users");
+        Query personsQuery = personsRef.orderByChild("email");
+
+        // Log.e("HYDE", String.valueOf(personsQuery));
+
+        mPeopleRV.hasFixedSize();
+        mPeopleRV.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+        FirebaseRecyclerOptions<Buyerslist> personsOptions = new FirebaseRecyclerOptions.Builder<Buyerslist>()
+                .setQuery(personsQuery, Buyerslist.class)
+                .setLifecycleOwner(this)
+                .build();
+
+        Log.e("Options", " data : " + personsOptions);
+
+
+        mPeopleRVAdapter = new FirebaseRecyclerAdapter<Buyerslist, AbuyersFragment.NewsViewHolder>(personsOptions) {
+
+
+            @NonNull
+            @Override
+            public AbuyersFragment.NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.chat_rows, parent, false);
+
+                return new AbuyersFragment.NewsViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(AbuyersFragment.NewsViewHolder holder, final int position, final Buyerslist model) {
+                holder.setTitle(model.getTitle());
+
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String pos =  mPeopleRVAdapter.getRef(position).getKey();
+
+
+
+                        String vall = model.getTitle();
+                        Intent intent = new Intent(getActivity(), AdminUsersingle.class);
+                        intent.putExtra("keyval", pos);
+                        startActivity(intent);
+
+
+
+                        //Toast.makeText(ChatFragment.this,vall,Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+
+        };
+
+        mPeopleRV.setAdapter(mPeopleRVAdapter);
+
+        return view;
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPeopleRVAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mPeopleRVAdapter.stopListening();
+
+
+    }
+
+    public static class NewsViewHolder extends RecyclerView.ViewHolder {
+        View mView;
+
+        public NewsViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+        }
+
+        public void setTitle(String title) {
+            TextView post_title = (TextView) mView.findViewById(R.id.post_title);
+            post_title.setText(title);
+        }
+
+    }
+
+}

@@ -68,7 +68,7 @@ public class ProductsFragment extends Fragment {
             @Override
             protected void onBindViewHolder(ProductsViewHolder holder, final int position, final Products model) {
                 holder.setTitle(model.getTitle());
-                holder.setDesc(model.getcomp());
+              //  holder.setDesc(model.getcomp());
                 holder.setPrice(model.getprice());
                 holder.setImage(getContext(), model.getImage());
 
@@ -127,10 +127,13 @@ public class ProductsFragment extends Fragment {
             TextView post_title = (TextView)mView.findViewById(R.id.post_title);
             post_title.setText(title);
         }
+        /*
         public void setDesc(String desc){
             TextView post_desc = (TextView)mView.findViewById(R.id.post_desc);
             post_desc.setText(desc);
         }
+
+         */
         public void setPrice(String price){
             TextView post_price = (TextView)mView.findViewById(R.id.post_price);
             post_price.setText(price);

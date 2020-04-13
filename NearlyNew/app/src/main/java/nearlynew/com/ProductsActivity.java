@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
-public class ProductsActivity extends AppCompatActivity {
+public class ProductsActivity extends Fragment {
 
     private RecyclerView mPeopleRV;
     private DatabaseReference mDatabase;
@@ -31,21 +33,22 @@ public class ProductsActivity extends AppCompatActivity {
     String emailvv;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.productsfrag);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        setTitle("My Products");
+        View rootView = inflater.inflate(R.layout.productsfrag, container, false);
+
+        getActivity().setTitle("My Products");
 
 
         //getActionBar().setDisplayHomeAsUpEnabled(true);
-        emailvv = getIntent().getExtras().getString("emailval");
+        emailvv = getActivity().getIntent().getExtras().getString("emailval");
 
         //"News" here will reflect what you have called your database in Firebase.
         mDatabase = FirebaseDatabase.getInstance().getReference().child("products");
         mDatabase.keepSynced(true);
 
-        mPeopleRV = (RecyclerView) findViewById(R.id.myRecycleView);
+        mPeopleRV = (RecyclerView) rootView.findViewById(R.id.myRecycleView);
 
         DatabaseReference personsRef = FirebaseDatabase.getInstance().getReference("products");
         Query personsQuery = personsRef.orderByChild("product_email").equalTo(emailvv);
@@ -53,7 +56,7 @@ public class ProductsActivity extends AppCompatActivity {
        // Log.e("HYDE", String.valueOf(personsQuery));
 
         mPeopleRV.hasFixedSize();
-        mPeopleRV.setLayoutManager(new LinearLayoutManager(this));
+        mPeopleRV.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
 
@@ -80,11 +83,11 @@ public class ProductsActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(ProductsActivity.NewsViewHolder holder, final int position, final Products model) {
                 holder.setTitle("Name: "+model.getTitle());
-                holder.setDesc("Company: "+model.getcomp());
+              //  holder.setDesc("Company: "+model.getcomp());
                 holder.setPrice("Price: "+model.getprice());
                 holder.setCategory("Category: "+model.getCategory());
-                holder.setType("Type: "+model.getType());
-                holder.setImage(getBaseContext(), model.getImage());
+              //  holder.setType("Type: "+model.getType());
+                holder.setImage(getContext(), model.getImage());
 
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -93,6 +96,15 @@ public class ProductsActivity extends AppCompatActivity {
                         //Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
                         //intent.putExtra("id", url);
                         //startActivity(intent);
+                        String pos =  mPeopleRVAdapter.getRef(position).getKey();
+                        //String va = String.valueOf(position);
+                      //  Toast.makeText(ProductsActivity.this,pos,Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent(getContext(), productOne.class);
+                        intent.putExtra("emailval", emailvv);
+                        intent.putExtra("keyval",pos);
+                        startActivity(intent);
+
                     }
                 });
             }
@@ -101,6 +113,7 @@ public class ProductsActivity extends AppCompatActivity {
         };
 
         mPeopleRV.setAdapter(mPeopleRVAdapter);
+        return rootView;
     }
 
     @Override
@@ -130,11 +143,14 @@ public class ProductsActivity extends AppCompatActivity {
             post_title.setText(title);
         }
 
+        /*
+
         public void setDesc(String desc) {
             TextView post_desc = (TextView) mView.findViewById(R.id.post_desc);
             post_desc.setText(desc);
         }
 
+         */
         public void setPrice(String price) {
             TextView post_price = (TextView) mView.findViewById(R.id.post_price);
             post_price.setText(price);
@@ -142,15 +158,21 @@ public class ProductsActivity extends AppCompatActivity {
         public void setCategory(String category) {
             TextView post_cat = (TextView) mView.findViewById(R.id.post_cat);
             post_cat.setText(category);
+
         }
+        /*
         public void setType(String type) {
             TextView post_type= (TextView) mView.findViewById(R.id.post_type);
             post_type.setText(type);
         }
+
+         */
 
         public void setImage(Context ctx, String image) {
             ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
             Picasso.get().load(image).into(post_image);
         }
     }
+
+
 }

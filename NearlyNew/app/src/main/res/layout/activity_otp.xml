@@ -1,4 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/appCompatOtp"
+        android:layout_width="92dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="143dp"
+        android:layout_marginEnd="143dp"
+        android:layout_marginBottom="257dp"
+        android:background="@drawable/bg_btn_login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textOtp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textOtp" />
+
+    <EditText
+        android:id="@+id/textOtp"
+        android:layout_width="336dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_txt_empty"
+        android:fontFamily="@font/montserrat_semibold"
+        android:hint="OTP"
+        android:paddingLeft="60dp"
+        android:textColor="@color/colorText"
+        android:textSize="40px"
+        app:layout_constraintBottom_toTopOf="@+id/appCompatOtp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="201dp"
+        android:layout_height="0dp"
+        android:background="@drawable/store"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="13dp"
+        android:fontFamily="@font/montserrat_light"
+        android:text="Your Used Cloth Store"
+        android:textColor="@color/colorText"
+        android:textSize="32px"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="9dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Nearly New"
+        android:textColor="@color/colorText"
+        android:textSize="96px"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Enter OTP"
+        android:textColor="@color/colorText"
+        android:textSize="96px"
+        app:layout_constraintBottom_toTopOf="@+id/textEmail"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -43,6 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="Enter OTP"
+            android:background="@drawable/bg_txt_empty"
             android:inputType="text"
             android:maxLines="1"
             android:textColor="@android:color/black" />
@@ -67,3 +165,5 @@
 
 </androidx.core.widget.NestedScrollView>
 
+
+-->

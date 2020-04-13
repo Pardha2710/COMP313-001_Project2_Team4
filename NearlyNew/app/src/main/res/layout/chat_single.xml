@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".chat_single">
+
+    <TextView
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorAccent"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="Chats"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="25sp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChat"
+        android:layout_width="match_parent"
+        android:layout_height="607dp"
+        android:layout_above="@+id/relativeLayout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="48dp"
+        android:scrollbars="vertical" />
+
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/white"
+        android:padding="5dp"
+        android:id="@+id/relativeLayout">
+
+        <EditText
+            android:id="@+id/etText"
+            android:layout_width="wrap_content"
+            android:layout_height="57dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_toStartOf="@+id/btSent"
+            android:paddingLeft="60dp"
+            android:background="@drawable/bg_txt_empty" />
+
+        <Button
+            android:id="@+id/btSent"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/bg_btn_login"
+            android:textColor="@android:color/black" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

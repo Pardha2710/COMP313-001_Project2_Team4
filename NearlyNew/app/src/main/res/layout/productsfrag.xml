@@ -23,11 +23,10 @@
             android:textColor="#ffffff"
             android:textSize="25sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
+               <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myRecycleView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/myRecycleView">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="665dp"></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 

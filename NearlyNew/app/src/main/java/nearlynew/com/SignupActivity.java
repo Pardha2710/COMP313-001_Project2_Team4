@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,11 +36,11 @@ import java.util.Random;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener  {
 
-    private AppCompatEditText fname, mname,lname, email,phone, pass,cpass,org,country, city, postal;
+    private EditText fname, mname,lname, email,phone, pass,cpass,org,country, city, postal;
     private RadioGroup gender,role;
     private RadioButton radbut,radrole;
-    private AppCompatButton register;
-    private AppCompatTextView loglink;
+    private Button register;
+    private TextView loglink;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
@@ -155,7 +156,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         // by implementing firebase auth
 
 
-        if(role.equals("User")) {
+        if(role.equals("Buyer")) {
 
 
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();

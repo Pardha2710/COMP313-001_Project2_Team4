@@ -48,6 +48,26 @@
         <activity android:name=".ProductsActivity"
             android:parentActivityName=".Sellermain"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".productOne"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".UserProducts"/>
+        <activity android:name=".userproductOne"/>
+        <activity android:name=".UserProductsFragment"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".wishproductOne"/>
+        <activity android:name=".searchProducts"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".chat_single"/>
+        <activity android:name=".ChatFragment"/>
+        <activity android:name=".UserChatFragment"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".chat_single_seller"/>
+        <activity android:name=".AproductOne"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ForgetPass"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".User_single"/>
+        <activity android:name=".AdminUsersingle"/>
     </application>
 
 </manifest>

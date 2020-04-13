@@ -266,14 +266,14 @@ public class NewproFragment extends Fragment {
                                 String product_location=city;
 
 
-                                String vall = product_name+","+product_email+","+product_price
-                                        +","+product_category+","+product_type+","+product_comp
-                                        +","+product_img1+","+product_location;
+                              //  String vall = product_name+","+product_email+","+product_price
+                                 //       +","+product_category+","+product_type+","+product_comp
+                                 //       +","+product_img1+","+product_location;
 
 
-                                Toast.makeText(getActivity(),vall,Toast.LENGTH_LONG).show();
+                               // Toast.makeText(getActivity(),vall,Toast.LENGTH_LONG).show();
 
-                                Log.i("Products Info",vall);
+                             //   Log.i("Products Info",vall);
 
 
 
@@ -323,7 +323,7 @@ public class NewproFragment extends Fragment {
 
                 // Check for null
                 if (user == null) {
-                    Log.e("Testing11", "User data is null!");
+
                     Toast.makeText(getActivity(),"Product Upload Failed",Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -334,7 +334,7 @@ public class NewproFragment extends Fragment {
                in.putExtra("emailval",emailvv);
                startActivity(in);
 
-                Log.e("Testing22", "User data is changed!" + user.name + ", " + user.email);
+
 
 
             }

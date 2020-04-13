@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Sellermain">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            style="@style/headerText"
+            android:textAlignment="center"
+            android:text="Product Info"
+            android:layout_marginBottom="20dp"/>
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="213dp"
+            app:srcCompat="@mipmap/ic_launcher_round" />
+
+
+
+        <RelativeLayout style="@style/profileDetailsLayout">
+
+
+            <TextView
+                android:id="@+id/nameTextView"
+                android:text="Name"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/pname"
+                android:text="developer"
+                android:layout_below="@id/nameTextView"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout style="@style/profileDetailsLayout">
+
+
+            <TextView
+                android:id="@+id/catTextView"
+                android:text="Category"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/pcat"
+                android:text="developer"
+                android:layout_below="@id/catTextView"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout style="@style/profileDetailsLayout">
+
+
+            <TextView
+                android:id="@+id/typeTextView"
+                android:text="Type"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/ptype"
+                android:text="developer"
+                android:layout_below="@id/typeTextView"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout style="@style/profileDetailsLayout">
+
+
+            <TextView
+                android:id="@+id/compTextView"
+                android:text="Company"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/pcomp"
+                android:text="developer"
+                android:layout_below="@id/compTextView"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+        <RelativeLayout style="@style/profileDetailsLayout">
+
+
+            <TextView
+                android:id="@+id/priceTextView"
+                android:text="Price"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/pprice"
+                android:text="developer"
+                android:layout_below="@id/priceTextView"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout style="@style/profileDetailsLayout">
+
+
+            <TextView
+                android:id="@+id/locTextView"
+                android:text="Location"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/ploc"
+                android:text="developer"
+                android:layout_below="@id/locTextView"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/shape"
+            android:text="Remove from Wishlist"
+            android:textColor="#FFF" />
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text="My Profile"
+        android:textColor="#000"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="98dp"
+        android:layout_height="98dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="68dp"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="182dp"
+        android:textColor="#000"
+        android:text="Add Profile Image" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="322dp"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="251dp"
+        android:text="Name"
+        android:textColor="#000"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="318dp"
+        android:layout_height="36dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="311dp"
+        android:text="Email"
+        android:textColor="#000"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="318dp"
+        android:layout_height="39dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="51dp"
+        android:layout_marginBottom="320dp"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:text="Phone Number" />
+
+    <TextView
+        android:id="@+id/gender"
+        android:layout_width="322dp"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="49dp"
+        android:layout_marginBottom="248dp"
+        android:text="Gender"
+        android:textColor="#000"
+        android:textSize="18sp" />
+
+
+</RelativeLayout>
+
+-->

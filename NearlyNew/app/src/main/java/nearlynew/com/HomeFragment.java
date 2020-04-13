@@ -1,5 +1,6 @@
 package nearlynew.com;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -72,10 +73,10 @@ public class HomeFragment extends Fragment {
             @Override
             protected void onBindViewHolder(ProductsActivity.NewsViewHolder holder, final int position, final Products model) {
                 holder.setTitle("Name: "+model.getTitle());
-                holder.setDesc("Company: "+model.getcomp());
+                //holder.setDesc("Company: "+model.getcomp());
                 holder.setPrice("Price: "+model.getprice());
                 holder.setCategory("Category: "+model.getCategory());
-                holder.setType("Type: "+model.getType());
+               // holder.setType("Type: "+model.getType());
                 holder.setImage(getActivity().getBaseContext(), model.getImage());
 
                 holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +86,16 @@ public class HomeFragment extends Fragment {
                         //Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
                         //intent.putExtra("id", url);
                         //startActivity(intent);
+
+                        String pos =  mPeopleRVAdapter.getRef(position).getKey();
+                        //String va = String.valueOf(position);
+                        //  Toast.makeText(ProductsActivity.this,pos,Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent(getContext(), productOne.class);
+                        intent.putExtra("emailval", emailvv);
+                        intent.putExtra("keyval",pos);
+                        startActivity(intent);
+
                     }
                 });
             }

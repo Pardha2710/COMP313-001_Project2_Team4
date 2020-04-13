@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,12 +22,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class Sellermain extends AppCompatActivity  {
 
-    DrawerLayout drawerLayout;
-    String emailvv, emailval,nameval;
-    TextView name,email;
+    private DrawerLayout drawerLayout;
+    private String emailvv, emailval,nameval,imgval;
+    private TextView name,email;
+    private ImageView iv;
 
 
     @Override
@@ -50,6 +53,7 @@ public class Sellermain extends AppCompatActivity  {
         View header = nav_view.getHeaderView(0);
         name = header.findViewById(R.id.fullname);
         email = header.findViewById(R.id.emailid);
+        iv = header.findViewById(R.id.img1);
 
 
 
@@ -82,6 +86,34 @@ public class Sellermain extends AppCompatActivity  {
             }
         });
 
+
+        DatabaseReference refere = FirebaseDatabase.getInstance().getReference("sellersimg");
+
+
+        refere.orderByChild("email").equalTo(emailvv).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+
+                for (DataSnapshot zoneSnapshot: dataSnapshot.getChildren()) {
+
+                    imgval = zoneSnapshot.child("profileimg").getValue(String.class);
+                }
+
+                if(imgval != null){
+                    Picasso.get().load(imgval).into(iv);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                Toast.makeText(Sellermain.this, "Not Able To Connect", Toast.LENGTH_LONG).show();
+            }
+        });
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
 
         nav_view.setCheckedItem(R.id.home);
@@ -97,16 +129,26 @@ public class Sellermain extends AppCompatActivity  {
 
                         break;
                     case R.id.products:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProductsActivity()).commit();
+                        /*
                         Intent in1 = new Intent(Sellermain.this,ProductsActivity.class);
                         in1.putExtra("emailval",emailvv);
                         startActivity(in1);
                         finish();
+                         */
                         break;
                     case R.id.newpro:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NewproFragment()).commit();
                         break;
                     case R.id.chat:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChatFragment()).commit();
+                       /*
+                        Intent in2 = new Intent(Sellermain.this,ChatFragment.class);
+                        in2.putExtra("emailval",emailvv);
+                        startActivity(in2);
+                        finish();
+
+                        */
                         break;
                     case R.id.profile:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();

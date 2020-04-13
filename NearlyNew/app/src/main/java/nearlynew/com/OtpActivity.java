@@ -22,9 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class OtpActivity extends AppCompatActivity {
 
-    private AppCompatEditText et;
+    private EditText et;
 
-    private AppCompatButton btn;
+    private Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
