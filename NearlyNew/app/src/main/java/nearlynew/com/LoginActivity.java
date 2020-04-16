@@ -53,16 +53,12 @@ public class LoginActivity extends AppCompatActivity {
     private String passw,role,name;
     private TextView etreg;
 
-    //a constant for detecting the login intent result
     private static final int RC_SIGN_IN = 234;
 
-    //Tag for the logs optional
     private static final String TAG = "Nearly New";
 
-    //creating a GoogleSignInClient object
     GoogleSignInClient mGoogleSignInClient;
 
-    //And also a Firebase Auth object
     FirebaseAuth mAuth;
 
     ImageView iv1;
@@ -88,12 +84,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-
-        // Progress dialog
-
-
-        // Login button Click Event
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -102,14 +92,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 int selectedId = roleval.getCheckedRadioButtonId();
 
-                // find the radiobutton by returned id
                 radrole = findViewById(selectedId);
 
                 String rolevv = radrole.getText().toString().trim();
 
-
                 if(rolevv.equals("Buyer")){
-
 
                                   DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 
@@ -123,16 +110,12 @@ public class LoginActivity extends AppCompatActivity {
 
                             if (passw != null) {
 
-                                // Toast.makeText(LoginActivity.this, passw, Toast.LENGTH_SHORT).show();
-
                                 if (passw.equals(password)) {
-                                    // Toast.makeText(LoginActivity.this, "Password Write", Toast.LENGTH_LONG).show();
 
                                         Intent in = new Intent(LoginActivity.this, Usermain.class);
                                         in.putExtra("emailval",email);
                                         startActivity(in);
                                         finish();
-
 
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Password Wrong", Toast.LENGTH_LONG).show();
@@ -141,7 +124,6 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(LoginActivity.this, "User Not Registered.", Toast.LENGTH_LONG).show();
                             }
-
 
                         }
 
@@ -166,18 +148,12 @@ public class LoginActivity extends AppCompatActivity {
 
                             if (passw != null) {
 
-                                // Toast.makeText(LoginActivity.this, passw, Toast.LENGTH_SHORT).show();
-
                                 if (passw.equals(password)) {
-                                    // Toast.makeText(LoginActivity.this, "Password Write", Toast.LENGTH_LONG).show();
-
-
 
                                         Intent in = new Intent(LoginActivity.this, Sellermain.class);
                                         in.putExtra("emailval",email);
                                         startActivity(in);
                                         finish();
-
 
 
                                 } else {
@@ -222,8 +198,6 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
-
-        // Link to Register Screen
         etreg.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -236,19 +210,12 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        //Then we need a GoogleSignInOptions object
-        //And we need to build it as below
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
-        //Then we will get the GoogleSignInClient object from GoogleSignIn class
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-
-
-
 
         iv1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,39 +225,30 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
-
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //if the requestCode is the Google Sign In code that we defined at starting
         if (requestCode == RC_SIGN_IN) {
 
-            //Getting the GoogleSignIn Task
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                //Google Sign In was successful, authenticate with Firebase
+
                 GoogleSignInAccount account = task.getResult(ApiException.class);
 
-                //authenticating with firebase
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
-
     private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
-        //getting the auth credential
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
 
-        //Now using firebase we are signing in the user here
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -299,43 +257,33 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            String emaill = user.getEmail(); // Valid email
-                            String nameva = user.getDisplayName(); // null
-                            Uri userimg = user.getPhotoUrl(); // null
+                            String emaill = user.getEmail();
+                            String nameva = user.getDisplayName();
+                            Uri userimg = user.getPhotoUrl();
                             
 
                             Toast.makeText(LoginActivity.this,emaill+' '+nameva,Toast.LENGTH_LONG).show();
 
-                            /*
-
-                            Toast.makeText(LoginActivity.this, "Signed In", Toast.LENGTH_SHORT).show();
-                            Intent in = new Intent(LoginActivity.this,Usermain.class);
-                            in.putExtra("emailval",acct);
-                            startActivity(in);
-
-                             */
 
 
                         } else {
-                            // If sign in fails, display a message to the user.
+
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
                         }
 
-                        // ...
+
                     }
                 });
     }
 
 
-    //this method is called on click
     private void signIn() {
-        //getting the google signin intent
+
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
 
-        //starting the activity for result
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 }

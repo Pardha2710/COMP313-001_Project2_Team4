@@ -46,8 +46,6 @@ public class ProductsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.productsfrag, container, false);
 
-
-        //"News" here will reflect what you have called your database in Firebase.
         mDatabase = FirebaseDatabase.getInstance().getReference("products");
         mDatabase.keepSynced(true);
 
@@ -68,17 +66,14 @@ public class ProductsFragment extends Fragment {
             @Override
             protected void onBindViewHolder(ProductsViewHolder holder, final int position, final Products model) {
                 holder.setTitle(model.getTitle());
-              //  holder.setDesc(model.getcomp());
+
                 holder.setPrice(model.getprice());
                 holder.setImage(getContext(), model.getImage());
 
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //final String url = model.getUrl();
-                        // Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
-                        // intent.putExtra("id", url);
-                        // startActivity(intent);
+
                     }
                 });
             }
@@ -95,13 +90,8 @@ public class ProductsFragment extends Fragment {
 
         mPeopleRV.setAdapter(mPeopleRVAdapter);
         mPeopleRVAdapter.startListening();
-
-
-
-
         return rootView;
     }
-
 
     @Override
     public void onStart() {
@@ -127,13 +117,7 @@ public class ProductsFragment extends Fragment {
             TextView post_title = (TextView)mView.findViewById(R.id.post_title);
             post_title.setText(title);
         }
-        /*
-        public void setDesc(String desc){
-            TextView post_desc = (TextView)mView.findViewById(R.id.post_desc);
-            post_desc.setText(desc);
-        }
 
-         */
         public void setPrice(String price){
             TextView post_price = (TextView)mView.findViewById(R.id.post_price);
             post_price.setText(price);
@@ -141,7 +125,7 @@ public class ProductsFragment extends Fragment {
         public void setImage(Context ctx, String image){
             ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
             Picasso.get().load(image).into(post_image);
-                    //wi(ctx).load(image).into(post_image);
+
         }
     }
 

@@ -38,11 +38,8 @@ public class ChatFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.chatfrag, container, false);
 
-
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
         emailvv = getActivity().getIntent().getExtras().getString("emailval");
 
-        //"News" here will reflect what you have called your database in Firebase.
         mDatabase = FirebaseDatabase.getInstance().getReference().child("chat_users");
         mDatabase.keepSynced(true);
 
@@ -50,8 +47,6 @@ public class ChatFragment extends Fragment {
 
         DatabaseReference personsRef = FirebaseDatabase.getInstance().getReference("chat_users");
         Query personsQuery = personsRef.orderByChild("selleremail").equalTo(emailvv);
-
-        // Log.e("HYDE", String.valueOf(personsQuery));
 
         mPeopleRV.hasFixedSize();
         mPeopleRV.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -64,9 +59,7 @@ public class ChatFragment extends Fragment {
 
         Log.e("Options", " data : " + personsOptions);
 
-
         mPeopleRVAdapter = new FirebaseRecyclerAdapter<Chatslistseller, ChatFragment.NewsViewHolder>(personsOptions) {
-
 
             @NonNull
             @Override
@@ -92,9 +85,6 @@ public class ChatFragment extends Fragment {
                         intent.putExtra("buyermail", vall);
                         startActivity(intent);
 
-
-
-                        //Toast.makeText(ChatFragment.this,vall,Toast.LENGTH_LONG).show();
                     }
                 });
             }

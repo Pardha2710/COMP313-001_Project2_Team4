@@ -77,8 +77,6 @@ public class NewproFragment extends Fragment {
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
 
-
-
     double latitude, longitude;
     private TextView tvLocation;
     private Button btnGetLocation;
@@ -88,17 +86,12 @@ public class NewproFragment extends Fragment {
 
     String city;
 
-
     String cate;
 
-
-    // Uri indicates, where the image will be picked from
     private Uri filePath;
 
-    // request code
     private final int PICK_IMAGE_REQUEST = 22;
 
-    // instance for firebase storage and StorageReference
     FirebaseStorage storage;
     StorageReference storageReference;
 
@@ -111,7 +104,6 @@ public class NewproFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.newprofrag, container, false);
-
 
 
         pname = view.findViewById(R.id.textPname);
@@ -127,7 +119,6 @@ public class NewproFragment extends Fragment {
 
         requestPermission();
 
-        // get the Firebase  storage reference
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         mFirebaseInstance = FirebaseDatabase.getInstance();
@@ -164,23 +155,15 @@ public class NewproFragment extends Fragment {
             }
         });
 
-
-        //Creating the ArrayAdapter instance having the country list
         ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, cat);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
+
         sp1.setAdapter(aa);
 
-        //Creating the ArrayAdapter instance having the country list
         ArrayAdapter ab = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, typ);
         ab.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
+
         sp2.setAdapter(ab);
-
-
-
-
-
 
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -196,11 +179,9 @@ public class NewproFragment extends Fragment {
         return view;
     }
 
-    // Select Image method
     private void SelectImage()
     {
 
-        // Defining Implicit Intent to mobile gallery
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -208,7 +189,7 @@ public class NewproFragment extends Fragment {
                 PICK_IMAGE_REQUEST);
     }
 
-    // Override onActivityResult method
+
     @Override
     public void onActivityResult(int requestCode,
                                  int resultCode,
@@ -217,33 +198,25 @@ public class NewproFragment extends Fragment {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        // checking request code and result code
-        // if request code is PICK_IMAGE_REQUEST and
-        // resultCode is RESULT_OK
-        // then set image in the image view
         if (requestCode == PICK_IMAGE_REQUEST
                 && resultCode == RESULT_OK
                 && data != null
                 && data.getData() != null) {
 
-            // Get the Uri of data
             filePath = data.getData();
             uploadImage();
         }
     }
 
-    // UploadImage method
     private void uploadImage()
     {
         if (filePath != null) {
 
-            // Code for showing progressDialog while uploading
             final ProgressDialog progressDialog
                     = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            // Defining the child of storageReference
             final StorageReference ref  = storageReference.child("images/"+ UUID.randomUUID().toString());
 
             ref.putFile(filePath).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -265,28 +238,7 @@ public class NewproFragment extends Fragment {
                                 String product_img1 = URL;
                                 String product_location=city;
 
-
-                              //  String vall = product_name+","+product_email+","+product_price
-                                 //       +","+product_category+","+product_type+","+product_comp
-                                 //       +","+product_img1+","+product_location;
-
-
-                               // Toast.makeText(getActivity(),vall,Toast.LENGTH_LONG).show();
-
-                             //   Log.i("Products Info",vall);
-
-
-
-
-
-
                                 mFirebaseDatabase = mFirebaseInstance.getReference("products");
-
-
-
-                                // find the radiobutton by returned id
-
-                               // String product_category = radbut.getText().toString().trim();
 
                                 if (TextUtils.isEmpty(userId)) {
                                     userId = mFirebaseDatabase.push().getKey();
@@ -299,9 +251,6 @@ public class NewproFragment extends Fragment {
 
                                 addUserChangeListener();
 
-
-
-                                //Toast.makeText(getActivity(), URL, Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -311,17 +260,13 @@ public class NewproFragment extends Fragment {
         }
     }
 
-    /**
-     * User data change listener
-     */
     private void addUserChangeListener() {
-        // User data change listener
+
         mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                // Check for null
                 if (user == null) {
 
                     Toast.makeText(getActivity(),"Product Upload Failed",Toast.LENGTH_LONG).show();
@@ -335,13 +280,11 @@ public class NewproFragment extends Fragment {
                startActivity(in);
 
 
-
-
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
+
                 Log.e("Retived Data", "Failed to read user", error.toException());
             }
         });

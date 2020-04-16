@@ -131,32 +131,11 @@ public class Usermain extends AppCompatActivity  {
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserProductsFragment()).commit();
 
 
-                        /*
-
-                        Intent in1 = new Intent(Usermain.this,UserProductsFragment.class);
-                        in1.putExtra("emailval",emailvv);
-                        startActivity(in1);
-                        finish();
-                        break;
-
-
-                         */
-
                         break;
 
                     case R.id.chat:
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserChatFragment()).commit();
-
-                        /*
-
-                        Intent in2 = new Intent(Usermain.this,UserChatFragment.class);
-                        in2.putExtra("emailval",emailvv);
-                        startActivity(in2);
-                        finish();
-
-                         */
-
 
 
                         break;

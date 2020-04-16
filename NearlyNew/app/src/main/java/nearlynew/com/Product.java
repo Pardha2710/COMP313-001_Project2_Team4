@@ -4,8 +4,6 @@ public class Product {
 
     public String pname,cat,comp,price,type,imglnk;
 
-
-
     public Product(String pname, String cat, String comp,
                    String price, String type, String imglnk) {
         this.pname = pname;

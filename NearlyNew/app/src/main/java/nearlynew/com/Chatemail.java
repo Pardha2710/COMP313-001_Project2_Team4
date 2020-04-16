@@ -8,7 +8,6 @@ public class Chatemail {
 
     public Chatemail() {
     }
-
     public Chatemail(String buyeremail,String selleremail,String fullemail) {
         this.buyeremail = buyeremail;
         this.selleremail = selleremail;

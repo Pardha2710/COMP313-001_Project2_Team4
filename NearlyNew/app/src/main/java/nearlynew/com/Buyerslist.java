@@ -13,7 +13,6 @@ public class Buyerslist {
     public Buyerslist(){
 
     }
-
     @PropertyName("email")
     public String getTitle() {
         return email;

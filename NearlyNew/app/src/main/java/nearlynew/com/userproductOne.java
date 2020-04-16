@@ -61,10 +61,6 @@ public class userproductOne extends AppCompatActivity {
         mFirebaseInstance = FirebaseDatabase.getInstance();
 
 
-       // Toast.makeText(productOne.this,keyval,Toast.LENGTH_SHORT).show();
-
-
-
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
 
@@ -73,18 +69,11 @@ public class userproductOne extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-
-
-
                 for (DataSnapshot zoneSnapshot: dataSnapshot.getChildren()) {
 
 
                     if (zoneSnapshot.getKey().equals(keyval)) {
 
-
-                        // Log.d("info", zoneSnapshot.child("product_name").getValue(String.class));
-
-                     //   Toast.makeText(productOne.this, zoneSnapshot.child("product_name").getValue(String.class), Toast.LENGTH_SHORT).show();
 
                         n1 = zoneSnapshot.child("product_name").getValue(String.class);
                         c1 = zoneSnapshot.child("product_category").getValue(String.class);
@@ -98,8 +87,6 @@ public class userproductOne extends AppCompatActivity {
                     }
 
 
-
-
                 }
 
                 name.setText(n1);
@@ -109,10 +96,6 @@ public class userproductOne extends AppCompatActivity {
                 price.setText(p1);
                 loc.setText(l1);
                 Picasso.get().load(i1).into(iv1);
-
-
-
-
 
             }
 
@@ -142,8 +125,6 @@ public class userproductOne extends AppCompatActivity {
                 addUserChangeListener();
 
 
-
-
             }
         });
 
@@ -163,7 +144,7 @@ public class userproductOne extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(!dataSnapshot.exists()) {
-                            //create new user
+
                             mFirebaseDatabase = mFirebaseInstance.getReference("chat_users");
                             if (TextUtils.isEmpty(userId)) {
                                 userId = mFirebaseDatabase.push().getKey();
@@ -174,20 +155,11 @@ public class userproductOne extends AppCompatActivity {
                             String fullemail = emailval+e1;
 
 
-                          //  Toast.makeText(userproductOne.this,selleremail+"--"+buyeremail+"--"+fullemail,Toast.LENGTH_LONG).show();
-
-
-
-
-
-                            //User user = new User(name, email, phone, password, role, active, gender);
                             Chatemail chatemail = new Chatemail(buyeremail,selleremail,fullemail);
 
                             mFirebaseDatabase.child(userId).setValue(chatemail);
 
                             addUserChangeListenerChat();
-
-
 
 
                         }else{
@@ -202,31 +174,18 @@ public class userproductOne extends AppCompatActivity {
                 };
                 queries.addListenerForSingleValueEvent(eventListener);
 
-                // get reference to 'users' node
-
-
-                /*
-                Intent ii =new Intent(userproductOne.this,chat_single.class);
-                ii.putExtra("buyeremail",emailval);
-                ii.putExtra("sellermail",e1);
-                startActivity(ii);
-                 */
             }
         });
 
     }
 
-    /**
-     * User data change listener
-     */
     private void addUserChangeListener() {
-        // User data change listener
+
         mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                // Check for null
                 if (user == null) {
                     Log.e("Testing11", "User data is null!");
                     Toast.makeText(userproductOne.this,"Wishlist NOt added",Toast.LENGTH_LONG).show();
@@ -245,20 +204,19 @@ public class userproductOne extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
+
                 Log.e("Retived Data", "Failed to read user", error.toException());
             }
         });
     }
 
     private void addUserChangeListenerChat() {
-        // User data change listener
+
         mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                // Check for null
                 if (user == null) {
                     Log.e("Testing11", "User data is null!");
                     Toast.makeText(userproductOne.this,"Chat Memeber adding failed",Toast.LENGTH_LONG).show();
@@ -277,7 +235,7 @@ public class userproductOne extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
+
                 Log.e("Retived Data", "Failed to read user", error.toException());
             }
         });

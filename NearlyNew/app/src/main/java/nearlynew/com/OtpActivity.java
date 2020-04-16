@@ -58,7 +58,5 @@ public class OtpActivity extends AppCompatActivity {
 
 
 
-
-
     }
 }

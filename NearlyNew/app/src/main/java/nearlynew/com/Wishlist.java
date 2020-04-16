@@ -12,8 +12,7 @@ public class Wishlist {
     public String plocation;
     public String email;
     public  String pid;
-    // Default constructor required for calls to
-    // DataSnapshot.getValue(User.class)
+
     public Wishlist() {
     }
 

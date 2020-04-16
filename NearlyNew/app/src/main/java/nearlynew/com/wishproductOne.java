@@ -27,7 +27,6 @@ public class wishproductOne extends AppCompatActivity {
     private  Button btn;
     private String userId;
 
-
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
 
@@ -55,10 +54,6 @@ public class wishproductOne extends AppCompatActivity {
         mFirebaseInstance = FirebaseDatabase.getInstance();
 
 
-       // Toast.makeText(productOne.this,keyval,Toast.LENGTH_SHORT).show();
-
-
-
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
 
@@ -66,19 +61,11 @@ public class wishproductOne extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
-
-
-
                 for (DataSnapshot zoneSnapshot: dataSnapshot.getChildren()) {
 
 
                     if (zoneSnapshot.getKey().equals(keyval)) {
 
-
-                        // Log.d("info", zoneSnapshot.child("product_name").getValue(String.class));
-
-                     //   Toast.makeText(productOne.this, zoneSnapshot.child("product_name").getValue(String.class), Toast.LENGTH_SHORT).show();
 
                         n1 = zoneSnapshot.child("pname").getValue(String.class);
                         c1 = zoneSnapshot.child("pcat").getValue(String.class);
@@ -90,9 +77,6 @@ public class wishproductOne extends AppCompatActivity {
 
                     }
 
-
-
-
                 }
 
                 name.setText(n1);
@@ -102,10 +86,6 @@ public class wishproductOne extends AppCompatActivity {
                 price.setText(p1);
                 loc.setText(l1);
                 Picasso.get().load(i1).into(iv1);
-
-
-
-
 
             }
 
@@ -136,17 +116,13 @@ public class wishproductOne extends AppCompatActivity {
 
     }
 
-    /**
-     * User data change listener
-     */
     private void addUserChangeListener() {
-        // User data change listener
+
         mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                // Check for null
                 if (user == null) {
                     Log.e("Testing11", "User data is null!");
                     Toast.makeText(wishproductOne.this,"Wishlist NOt added",Toast.LENGTH_LONG).show();
@@ -165,7 +141,7 @@ public class wishproductOne extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
+
                 Log.e("Retived Data", "Failed to read user", error.toException());
             }
         });

@@ -42,7 +42,6 @@ public class chat_single extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseRecyclerAdapter<Chatmessage, chat_single.NewsViewHolder> mPeopleRVAdapter;
 
-
     String emailvv,sellermail;
     Button btn;
     EditText et;
@@ -79,10 +78,6 @@ public class chat_single extends AppCompatActivity {
                 String chat_emailfull = emailvv+sellermail;
                 String chat_sender_msg = chat;
 
-
-               //  Toast.makeText(chat_single.this,chat_emailfull+"--"+chat_recev+"--"+chat_sender+"--"+chat_sender_msg,Toast.LENGTH_LONG).show();
-
-                //User user = new User(name, email, phone, password, role, active, gender);
                 Chatmessage chatmessage = new Chatmessage(chat_emailfull,chat_recev,chat_sender,chat_sender_msg);
 
                 mFirebaseDatabase.child(userId).setValue(chatmessage);
@@ -95,16 +90,11 @@ public class chat_single extends AppCompatActivity {
         });
 
 
-
         String fullemail = emailvv+sellermail;
-
-
-
 
         DatabaseReference personsRef = FirebaseDatabase.getInstance().getReference("chat_messg");
         Query personsQuery = personsRef.orderByChild("chat_emailfull").equalTo(fullemail);
 
-        // Log.e("HYDE", String.valueOf(personsQuery));
 
         mPeopleRV.hasFixedSize();
         mPeopleRV.setLayoutManager(new LinearLayoutManager(this));
@@ -184,17 +174,14 @@ public class chat_single extends AppCompatActivity {
     }
 
 
-    /**
-     * User data change listener
-     */
     private void addUserChangeListener() {
-        // User data change listener
+
         mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                // Check for null
+
                 if (user == null) {
                     Log.e("Testing11", "User data is null!");
                     Toast.makeText(chat_single.this,"Wishlist NOt added",Toast.LENGTH_LONG).show();
@@ -209,12 +196,10 @@ public class chat_single extends AppCompatActivity {
 
                 Log.e("Testing22", "User data is changed!" + user.name + ", " + user.email);
 
-
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
+
                 Log.e("Retived Data", "Failed to read user", error.toException());
             }
         });
@@ -222,7 +207,6 @@ public class chat_single extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         Intent in = new Intent(chat_single.this,Usermain.class);
         in.putExtra("emailval",emailvv);
         startActivity(in);

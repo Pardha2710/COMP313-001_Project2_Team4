@@ -47,14 +47,11 @@ public class Sellermain extends AppCompatActivity  {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
-
         NavigationView nav_view = findViewById(R.id.nav_view);
         View header = nav_view.getHeaderView(0);
         name = header.findViewById(R.id.fullname);
         email = header.findViewById(R.id.emailid);
         iv = header.findViewById(R.id.img1);
-
 
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("sellers");
@@ -130,25 +127,14 @@ public class Sellermain extends AppCompatActivity  {
                         break;
                     case R.id.products:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProductsActivity()).commit();
-                        /*
-                        Intent in1 = new Intent(Sellermain.this,ProductsActivity.class);
-                        in1.putExtra("emailval",emailvv);
-                        startActivity(in1);
-                        finish();
-                         */
+
                         break;
                     case R.id.newpro:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NewproFragment()).commit();
                         break;
                     case R.id.chat:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChatFragment()).commit();
-                       /*
-                        Intent in2 = new Intent(Sellermain.this,ChatFragment.class);
-                        in2.putExtra("emailval",emailvv);
-                        startActivity(in2);
-                        finish();
 
-                        */
                         break;
                     case R.id.profile:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();

@@ -10,8 +10,6 @@ public class User {
     public String active;
     public String gender;
 
-    // Default constructor required for calls to
-    // DataSnapshot.getValue(User.class)
     public User() {
     }
 

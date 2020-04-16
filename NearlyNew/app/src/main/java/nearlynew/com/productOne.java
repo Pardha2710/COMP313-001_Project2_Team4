@@ -25,7 +25,6 @@ public class productOne extends AppCompatActivity {
     ImageView iv1;
     Button btn;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +45,6 @@ public class productOne extends AppCompatActivity {
         keyval = getIntent().getExtras().getString("keyval");
 
 
-       // Toast.makeText(productOne.this,keyval,Toast.LENGTH_SHORT).show();
-
-
-
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
 
@@ -57,19 +52,9 @@ public class productOne extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
-
-
-
                 for (DataSnapshot zoneSnapshot: dataSnapshot.getChildren()) {
 
-
                     if (zoneSnapshot.getKey().equals(keyval)) {
-
-
-                        // Log.d("info", zoneSnapshot.child("product_name").getValue(String.class));
-
-                     //   Toast.makeText(productOne.this, zoneSnapshot.child("product_name").getValue(String.class), Toast.LENGTH_SHORT).show();
 
                         n1 = zoneSnapshot.child("product_name").getValue(String.class);
                         c1 = zoneSnapshot.child("product_category").getValue(String.class);
@@ -82,8 +67,6 @@ public class productOne extends AppCompatActivity {
                     }
 
 
-
-
                 }
 
                 name.setText(n1);
@@ -93,9 +76,6 @@ public class productOne extends AppCompatActivity {
                 price.setText(p1);
                 loc.setText(l1);
                 Picasso.get().load(i1).into(iv1);
-
-
-
 
 
             }
@@ -118,9 +98,6 @@ public class productOne extends AppCompatActivity {
                 Intent in = new Intent(productOne.this,Sellermain.class);
                 in.putExtra("emailval",emailval);
                 startActivity(in);
-
-
-
             }
         });
 

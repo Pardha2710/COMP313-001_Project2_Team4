@@ -71,8 +71,6 @@ public class User_single extends AppCompatActivity {
                 phone.setText(p1);
 
 
-
-
             }
 
             @Override

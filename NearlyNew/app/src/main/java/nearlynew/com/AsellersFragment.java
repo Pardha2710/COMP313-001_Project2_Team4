@@ -41,7 +41,6 @@ public class AsellersFragment extends Fragment {
         DatabaseReference personsRef = FirebaseDatabase.getInstance().getReference("sellers");
         Query personsQuery = personsRef.orderByChild("email");
 
-        // Log.e("HYDE", String.valueOf(personsQuery));
 
         mPeopleRV.hasFixedSize();
         mPeopleRV.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -78,17 +77,11 @@ public class AsellersFragment extends Fragment {
 
 
                         String pos =  mPeopleRVAdapter.getRef(position).getKey();
-
-
-
                         String vall = model.getTitle();
                         Intent intent = new Intent(getActivity(), User_single.class);
                         intent.putExtra("keyval", pos);
                         startActivity(intent);
 
-
-
-                        //Toast.makeText(ChatFragment.this,vall,Toast.LENGTH_LONG).show();
                     }
                 });
             }

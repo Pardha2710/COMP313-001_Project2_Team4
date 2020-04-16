@@ -36,8 +36,6 @@ public class AproductsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.adminprodfrag, container, false);
 
-
-        //"News" here will reflect what you have called your database in Firebase.
         mDatabase = FirebaseDatabase.getInstance().getReference().child("products");
         mDatabase.keepSynced(true);
 
@@ -45,8 +43,6 @@ public class AproductsFragment extends Fragment {
 
         DatabaseReference personsRef = FirebaseDatabase.getInstance().getReference("products");
         Query personsQuery = personsRef.orderByChild("product_email");
-
-        // Log.e("HYDE", String.valueOf(personsQuery));
 
         mPeopleRV.hasFixedSize();
         mPeopleRV.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -76,22 +72,17 @@ public class AproductsFragment extends Fragment {
             @Override
             protected void onBindViewHolder(AproductsFragment.NewsViewHolder holder, final int position, final Products model) {
                 holder.setTitle("Name: " + model.getTitle());
-                //  holder.setDesc("Company: "+model.getcomp());
+
                 holder.setPrice("Price: " + model.getprice());
                 holder.setCategory("Category: " + model.getCategory());
-                //  holder.setType("Type: "+model.getType());
+
                 holder.setImage(getContext(), model.getImage());
 
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //final String url = model.getUrl();
-                        //Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
-                        //intent.putExtra("id", url);
-                        //startActivity(intent);
+
                         String pos = mPeopleRVAdapter.getRef(position).getKey();
-                        //String va = String.valueOf(position);
-                        //  Toast.makeText(ProductsActivity.this,pos,Toast.LENGTH_LONG).show();
 
                         Intent intent = new Intent(getActivity(), AproductOne.class);
                         intent.putExtra("keyval", pos);
@@ -135,14 +126,6 @@ public class AproductsFragment extends Fragment {
             post_title.setText(title);
         }
 
-        /*
-
-        public void setDesc(String desc) {
-            TextView post_desc = (TextView) mView.findViewById(R.id.post_desc);
-            post_desc.setText(desc);
-        }
-
-         */
         public void setPrice(String price) {
             TextView post_price = (TextView) mView.findViewById(R.id.post_price);
             post_price.setText(price);
@@ -153,13 +136,6 @@ public class AproductsFragment extends Fragment {
             post_cat.setText(category);
 
         }
-        /*
-        public void setType(String type) {
-            TextView post_type= (TextView) mView.findViewById(R.id.post_type);
-            post_type.setText(type);
-        }
-
-         */
 
         public void setImage(Context ctx, String image) {
             ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);

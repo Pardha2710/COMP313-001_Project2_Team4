@@ -36,17 +36,14 @@ public class UserProfileFragment extends Fragment {
 
     private TextView name,email,phone, et;
     private String emailval,n1,e1,p1,i1;
-    // Uri indicates, where the image will be picked from
+
     private Uri filePath;
     private String userId;
-    //private ImageView iv;
+
     private de.hdodenhof.circleimageview.CircleImageView iv;
 
-
-    // request code
     private final int PICK_IMAGE_REQUEST = 22;
 
-    // instance for firebase storage and StorageReference
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private DatabaseReference mFirebaseDatabase;
@@ -66,11 +63,8 @@ public class UserProfileFragment extends Fragment {
 
         emailval = getActivity().getIntent().getExtras().getString("emailval");
 
-
-        // get the Firebase  storage reference
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-
 
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
@@ -96,8 +90,6 @@ public class UserProfileFragment extends Fragment {
                 phone.setText(p1);
 
 
-
-
             }
 
             @Override
@@ -117,9 +109,7 @@ public class UserProfileFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-
                 for (DataSnapshot zoneSnapshot: dataSnapshot.getChildren()) {
-                    //  Log.d("info", zoneSnapshot.child("name").getValue(String.class));
 
                     i1 = zoneSnapshot.child("profileimg").getValue(String.class);
 
@@ -128,10 +118,6 @@ public class UserProfileFragment extends Fragment {
                 if(i1 != null){
                     Picasso.get().load(i1).into(iv);
                 }
-
-
-
-
 
             }
 
@@ -159,7 +145,6 @@ public class UserProfileFragment extends Fragment {
     private void SelectImage()
     {
 
-        // Defining Implicit Intent to mobile gallery
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -167,7 +152,6 @@ public class UserProfileFragment extends Fragment {
                 PICK_IMAGE_REQUEST);
     }
 
-    // Override onActivityResult method
     @Override
     public void onActivityResult(int requestCode,
                                  int resultCode,
@@ -175,34 +159,25 @@ public class UserProfileFragment extends Fragment {
     {
 
         super.onActivityResult(requestCode, resultCode, data);
-
-        // checking request code and result code
-        // if request code is PICK_IMAGE_REQUEST and
-        // resultCode is RESULT_OK
-        // then set image in the image view
         if (requestCode == PICK_IMAGE_REQUEST
                 && resultCode == RESULT_OK
                 && data != null
                 && data.getData() != null) {
 
-            // Get the Uri of data
             filePath = data.getData();
             uploadImage();
         }
     }
 
-    // UploadImage method
     private void uploadImage()
     {
         if (filePath != null) {
 
-            // Code for showing progressDialog while uploading
             final ProgressDialog progressDialog
                     = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            // Defining the child of storageReference
             final StorageReference ref  = storageReference.child("userprofile/"+ UUID.randomUUID().toString());
 
             ref.putFile(filePath).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -224,11 +199,6 @@ public class UserProfileFragment extends Fragment {
                                 mFirebaseDatabase = mFirebaseInstance.getReference("usersimg");
 
 
-
-                                // find the radiobutton by returned id
-
-                                // String product_category = radbut.getText().toString().trim();
-
                                 if (TextUtils.isEmpty(userId)) {
                                     userId = mFirebaseDatabase.push().getKey();
                                 }
@@ -249,17 +219,13 @@ public class UserProfileFragment extends Fragment {
         }
     }
 
-    /**
-     * User data change listener
-     */
     private void addUserChangeListener() {
-        // User data change listener
+
         mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                // Check for null
                 if (user == null) {
 
                     Toast.makeText(getActivity(),"Image Upload Failed",Toast.LENGTH_LONG).show();
@@ -273,13 +239,11 @@ public class UserProfileFragment extends Fragment {
                 startActivity(in);
 
 
-
-
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
+
                 Log.e("Retived Data", "Failed to read user", error.toException());
             }
         });

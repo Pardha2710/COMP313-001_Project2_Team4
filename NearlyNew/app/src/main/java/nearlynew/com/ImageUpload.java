@@ -10,8 +10,7 @@ public class ImageUpload {
     public String product_comp;
     public String product_img1;
     public String product_location;
-    // Default constructor required for calls to
-    // DataSnapshot.getValue(User.class)
+
     public ImageUpload() {
     }
 

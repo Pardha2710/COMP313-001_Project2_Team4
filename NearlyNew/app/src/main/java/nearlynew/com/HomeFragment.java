@@ -31,10 +31,8 @@ public class HomeFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.homefrag, container, false);
 
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
         emailvv = getActivity().getIntent().getExtras().getString("emailval");
 
-        //"News" here will reflect what you have called your database in Firebase.
         mDatabase = FirebaseDatabase.getInstance().getReference().child("products");
         mDatabase.keepSynced(true);
 
@@ -43,12 +41,8 @@ public class HomeFragment extends Fragment {
         DatabaseReference personsRef = FirebaseDatabase.getInstance().getReference("products");
         Query personsQuery = personsRef.orderByChild("product_email").equalTo(emailvv);
 
-        // Log.e("HYDE", String.valueOf(personsQuery));
-
         mPeopleRV.hasFixedSize();
         mPeopleRV.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
 
         FirebaseRecyclerOptions<Products> personsOptions = new FirebaseRecyclerOptions.Builder<Products>()
                 .setQuery(personsQuery, Products.class)
@@ -57,9 +51,7 @@ public class HomeFragment extends Fragment {
 
         Log.d("Options"," data : "+personsOptions);
 
-
         mPeopleRVAdapter = new FirebaseRecyclerAdapter<Products, ProductsActivity.NewsViewHolder>(personsOptions) {
-
 
             @NonNull
             @Override
@@ -73,23 +65,17 @@ public class HomeFragment extends Fragment {
             @Override
             protected void onBindViewHolder(ProductsActivity.NewsViewHolder holder, final int position, final Products model) {
                 holder.setTitle("Name: "+model.getTitle());
-                //holder.setDesc("Company: "+model.getcomp());
+
                 holder.setPrice("Price: "+model.getprice());
                 holder.setCategory("Category: "+model.getCategory());
-               // holder.setType("Type: "+model.getType());
+
                 holder.setImage(getActivity().getBaseContext(), model.getImage());
 
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //final String url = model.getUrl();
-                        //Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
-                        //intent.putExtra("id", url);
-                        //startActivity(intent);
 
                         String pos =  mPeopleRVAdapter.getRef(position).getKey();
-                        //String va = String.valueOf(position);
-                        //  Toast.makeText(ProductsActivity.this,pos,Toast.LENGTH_LONG).show();
 
                         Intent intent = new Intent(getContext(), productOne.class);
                         intent.putExtra("emailval", emailvv);

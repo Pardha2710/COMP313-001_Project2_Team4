@@ -36,10 +36,8 @@ public class UserChatFragment extends Fragment {
 
         getActivity().setTitle("Chat List");
 
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
         emailvv = getActivity().getIntent().getExtras().getString("emailval");
 
-        //"News" here will reflect what you have called your database in Firebase.
         mDatabase = FirebaseDatabase.getInstance().getReference().child("chat_users");
         mDatabase.keepSynced(true);
 
@@ -48,7 +46,6 @@ public class UserChatFragment extends Fragment {
         DatabaseReference personsRef = FirebaseDatabase.getInstance().getReference("chat_users");
         Query personsQuery = personsRef.orderByChild("buyeremail").equalTo(emailvv);
 
-        // Log.e("HYDE", String.valueOf(personsQuery));
 
         mPeopleRV.hasFixedSize();
         mPeopleRV.setLayoutManager(new LinearLayoutManager(getContext()));

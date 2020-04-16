@@ -47,7 +47,6 @@ public class ForgetPass extends AppCompatActivity {
     private TextView etreg;
 
 
-    //And also a Firebase Auth object
     FirebaseAuth mAuth;
 
     ImageView iv1;
@@ -63,10 +62,6 @@ public class ForgetPass extends AppCompatActivity {
         btnBack = findViewById(R.id.btn_back);
 
 
-        // Progress dialog
-
-
-        // Login button Click Event
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -74,7 +69,6 @@ public class ForgetPass extends AppCompatActivity {
 
                 int selectedId = roleval.getCheckedRadioButtonId();
 
-                // find the radiobutton by returned id
                 radrole = findViewById(selectedId);
 
                 String rolevv = radrole.getText().toString().trim();
@@ -124,16 +118,6 @@ public class ForgetPass extends AppCompatActivity {
                                         .send();
 
                                 try {
-                    /*
-                    GMailSender sender = new GMailSender("pardhasardhi4@gmail.com", "pardhasardhi572");
-                    sender.sendMail("OTP Verification from Nearly New",
-                            msg,
-                            "pardhasardhi4@gmail.com",
-                            emailval);
-
-                     */
-
-                                    // Toast.makeText(SignupActivity.this,emailval,Toast.LENGTH_LONG).show();
 
                                 } catch (Exception e) {
                                     Log.e("SendMail", e.getMessage(), e);
@@ -142,13 +126,9 @@ public class ForgetPass extends AppCompatActivity {
 
                                 Toast.makeText(ForgetPass.this, "Password is Sent to your email.", Toast.LENGTH_SHORT).show();
 
-                                    // Toast.makeText(LoginActivity.this, "Password Write", Toast.LENGTH_LONG).show();
-
                                     Intent in = new Intent(ForgetPass.this, LoginActivity.class);
                                     startActivity(in);
                                     finish();
-
-
 
                             } else {
                                 Toast.makeText(ForgetPass.this, "User Not Registered.", Toast.LENGTH_LONG).show();
@@ -205,16 +185,6 @@ public class ForgetPass extends AppCompatActivity {
                                         .send();
 
                                 try {
-                    /*
-                    GMailSender sender = new GMailSender("pardhasardhi4@gmail.com", "pardhasardhi572");
-                    sender.sendMail("OTP Verification from Nearly New",
-                            msg,
-                            "pardhasardhi4@gmail.com",
-                            emailval);
-
-                     */
-
-                                    // Toast.makeText(SignupActivity.this,emailval,Toast.LENGTH_LONG).show();
 
                                 } catch (Exception e) {
                                     Log.e("SendMail", e.getMessage(), e);
@@ -223,16 +193,9 @@ public class ForgetPass extends AppCompatActivity {
 
                                 Toast.makeText(ForgetPass.this, "Password is Sent to your email.", Toast.LENGTH_SHORT).show();
 
-
-
-
-
                                 Intent in = new Intent(ForgetPass.this, LoginActivity.class);
                                     startActivity(in);
                                     finish();
-
-
-
 
                             } else {
                                 Toast.makeText(ForgetPass.this, "Seller Not Registered.", Toast.LENGTH_LONG).show();

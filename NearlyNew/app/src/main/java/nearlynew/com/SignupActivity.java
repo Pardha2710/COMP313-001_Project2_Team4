@@ -46,9 +46,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private String userId;
     private String emailval;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,17 +65,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
 
-
-
         initListeners();
-
 
     }
 
-
-    /**
-     * This method is to initialize listeners
-     */
     private void initListeners() {
 
         register.setOnClickListener(this);
@@ -86,7 +76,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
 
     }
-
 
     @Override
     public void onClick(View v) {
@@ -116,12 +105,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         int selectedId = gender.getCheckedRadioButtonId();
 
-        // find the radiobutton by returned id
         radbut = findViewById(selectedId);
 
         int selectedId1 = role.getCheckedRadioButtonId();
 
-        // find the radiobutton by returned id
         radrole = findViewById(selectedId1);
 
         String gen = radbut.getText().toString().trim();
@@ -133,8 +120,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             if(password.equals(cpassword)) {
 
                 createUser(namef, emailval, number, password, rolev, active, gen);
-
-
 
             }else{
                 Toast.makeText(getApplicationContext(),
@@ -151,13 +136,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     private void createUser(final String name, final String email, final String phone, final String password,
                             final String role, final String active, final String gender) {
-        // TODO
-        // In real apps this userId should be fetched
-        // by implementing firebase auth
 
 
         if(role.equals("Buyer")) {
-
 
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
             DatabaseReference userNameRef = rootRef.child("users");
@@ -166,13 +147,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if(!dataSnapshot.exists()) {
-                        //create new user
+
                         mFirebaseDatabase = mFirebaseInstance.getReference("users");
                         if (TextUtils.isEmpty(userId)) {
                             userId = mFirebaseDatabase.push().getKey();
                         }
-
-
 
                         User user = new User(name, email, phone, password, role, active, gender);
 
@@ -192,11 +171,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             };
             queries.addListenerForSingleValueEvent(eventListener);
 
-            // get reference to 'users' node
 
         }else{
-            // get reference to 'users' node
-          //  mFirebaseDatabase = mFirebaseInstance.getReference("sellers");
+
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
             DatabaseReference userNameRef = rootRef.child("sellers");
             Query queries=userNameRef.orderByChild("email").equalTo(email);
@@ -204,14 +181,12 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if(!dataSnapshot.exists()) {
-                        //create new user
+
                         mFirebaseDatabase = mFirebaseInstance.getReference("sellers");
 
                         if (TextUtils.isEmpty(userId)) {
                             userId = mFirebaseDatabase.push().getKey();
                         }
-
-
 
                         User user = new User(name, email, phone, password, role, active, gender);
 
@@ -237,17 +212,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    /**
-     * User data change listener
-     */
     private void addUserChangeListener() {
-        // User data change listener
+
         mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                // Check for null
                 if (user == null) {
                     Log.e("Testing11", "User data is null!");
                     Toast.makeText(SignupActivity.this,"Registration Failed",Toast.LENGTH_LONG).show();
@@ -271,41 +242,25 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         .withOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
                             @Override
                             public void onSuccess() {
-                                //do some magic
+
                                 Toast.makeText(SignupActivity.this,"OTP Mail Sent",Toast.LENGTH_LONG).show();
                             }
                         })
                         .withOnFailCallback(new BackgroundMail.OnFailCallback() {
                             @Override
                             public void onFail() {
-                               //do some magic
+
                                 Toast.makeText(SignupActivity.this,"OTP Mail Failed",Toast.LENGTH_LONG).show();
                             }
                         })
                         .send();
 
                 try {
-                    /*
-                    GMailSender sender = new GMailSender("pardhasardhi4@gmail.com", "pardhasardhi572");
-                    sender.sendMail("OTP Verification from Nearly New",
-                            msg,
-                            "pardhasardhi4@gmail.com",
-                            emailval);
 
-                     */
-
-                   // Toast.makeText(SignupActivity.this,emailval,Toast.LENGTH_LONG).show();
 
                 } catch (Exception e) {
                     Log.e("SendMail", e.getMessage(), e);
                 }
-
-
-
-
-
-              //  Toast.makeText(SignupActivity.this,"Registration Success. Please Enter Otp",Toast.LENGTH_LONG).show();
-
 
 
                 Intent in = new Intent(SignupActivity.this,OtpActivity.class);
@@ -314,22 +269,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
                 Log.e("Testing22", "User data is changed!" + user.name + ", " + user.email);
 
-
-
-
-                // Display newly updated name and email
-                //txtDetails.setText(user.name + ", " + user.email);
-
-                // clear edit text
-               // inputEmail.setText("");
-                //inputName.setText("");
-
-                //toggleButton();
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
+
                 Log.e("Retived Data", "Failed to read user", error.toException());
             }
         });
