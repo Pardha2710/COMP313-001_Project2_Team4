@@ -134,10 +134,7 @@ public class chat_single extends AppCompatActivity {
 
         mPeopleRV.setAdapter(mPeopleRVAdapter);
 
-
-
     }
-
 
     @Override
     public void onStart() {

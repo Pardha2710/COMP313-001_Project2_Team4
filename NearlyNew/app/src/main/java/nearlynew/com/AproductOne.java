@@ -24,7 +24,6 @@ public class AproductOne extends AppCompatActivity {
     ImageView iv1;
     Button btn;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +99,6 @@ public class AproductOne extends AppCompatActivity {
                 Intent in = new Intent(AproductOne.this,Adminmain.class);
 
                 startActivity(in);
-
-
 
             }
         });

@@ -64,14 +64,9 @@ public class AdminUsersingle extends AppCompatActivity {
                     }
 
                 }
-
                 name.setText(n1);
                 email.setText(e1);
                 phone.setText(p1);
-
-
-
-
             }
 
             @Override

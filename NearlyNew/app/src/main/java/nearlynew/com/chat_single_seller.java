@@ -61,7 +61,6 @@ public class chat_single_seller extends AppCompatActivity {
 
                 String chat = et.getText().toString();
 
-
                 mFirebaseDatabase = mFirebaseInstance.getReference("chat_messg");
                 if (TextUtils.isEmpty(userId)) {
                     userId = mFirebaseDatabase.push().getKey();

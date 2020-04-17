@@ -1,9 +1,14 @@
 package nearlynew.com;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +27,17 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
+import com.facebook.AccessToken;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.appevents.AppEventsLogger;
+
+import com.facebook.CallbackManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -40,11 +56,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText inputEmail,inputPassword;
     private Button btnLogin;
     private TextView tv;
+
+    LoginButton loginButton;
+    CallbackManager callbackManager;
 
     private RadioButton radbut,radrole;
 
@@ -61,25 +87,29 @@ public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
-    ImageView iv1;
+    ImageView iv1,iv2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        inputEmail =  findViewById(R.id.textEmail);
+
+        printHashKey(getBaseContext());
+
+        inputEmail = findViewById(R.id.textEmail);
         inputPassword = findViewById(R.id.textPassword);
         roleval = findViewById(R.id.radioRole);
         btnLogin = findViewById(R.id.appCompatButtonLogin);
         etreg = findViewById(R.id.textViewLinkRegister);
         iv1 = findViewById(R.id.imageView3);
         tv = findViewById(R.id.textViewLinkForget);
+        loginButton = findViewById(R.id.login_button);
 
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(LoginActivity.this,ForgetPass.class);
+                Intent in = new Intent(LoginActivity.this, ForgetPass.class);
                 startActivity(in);
             }
         });
@@ -96,9 +126,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 String rolevv = radrole.getText().toString().trim();
 
-                if(rolevv.equals("Buyer")){
+                if (rolevv.equals("Buyer")) {
 
-                                  DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 
                     reference.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -112,10 +142,10 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if (passw.equals(password)) {
 
-                                        Intent in = new Intent(LoginActivity.this, Usermain.class);
-                                        in.putExtra("emailval",email);
-                                        startActivity(in);
-                                        finish();
+                                    Intent in = new Intent(LoginActivity.this, Usermain.class);
+                                    in.putExtra("emailval", email);
+                                    startActivity(in);
+                                    finish();
 
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Password Wrong", Toast.LENGTH_LONG).show();
@@ -134,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
 
-            }else if(rolevv.equals("Seller")){
+                } else if (rolevv.equals("Seller")) {
 
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("sellers");
 
@@ -150,10 +180,10 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if (passw.equals(password)) {
 
-                                        Intent in = new Intent(LoginActivity.this, Sellermain.class);
-                                        in.putExtra("emailval",email);
-                                        startActivity(in);
-                                        finish();
+                                    Intent in = new Intent(LoginActivity.this, Sellermain.class);
+                                    in.putExtra("emailval", email);
+                                    startActivity(in);
+                                    finish();
 
 
                                 } else {
@@ -175,19 +205,19 @@ public class LoginActivity extends AppCompatActivity {
                     });
 
 
-                }else if(rolevv.equals("Admin")){
+                } else if (rolevv.equals("Admin")) {
 
-                    if(email.equals("admin")){
+                    if (email.equals("admin")) {
 
-                        if(password.equals("password123")){
+                        if (password.equals("password123")) {
 
-                            Intent in = new Intent(LoginActivity.this,Adminmain.class);
+                            Intent in = new Intent(LoginActivity.this, Adminmain.class);
                             startActivity(in);
-                        }else{
+                        } else {
                             Toast.makeText(LoginActivity.this, "Admin Password Wrong", Toast.LENGTH_LONG).show();
                         }
 
-                    }else{
+                    } else {
                         Toast.makeText(LoginActivity.this, "Admin Username Wrong", Toast.LENGTH_LONG).show();
                     }
 
@@ -224,6 +254,61 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        loginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
+        callbackManager = CallbackManager.Factory.create();
+
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+                boolean loggedIn = AccessToken.getCurrentAccessToken() == null;
+                Log.d("API123", loggedIn + " ??");
+
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+
+                getUserProfile(accessToken);
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+
+            }
+        });
+
+
+    }
+
+    private void getUserProfile(AccessToken currentAccessToken) {
+        GraphRequest request = GraphRequest.newMeRequest(
+                currentAccessToken, new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        Log.d("TAG", object.toString());
+                        try {
+
+                            String email = object.getString("email");
+
+                            Intent in = new Intent(LoginActivity.this, Usermain.class);
+                            in.putExtra("emailval",email);
+                            startActivity(in);
+                            finish();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "first_name,last_name,email,id");
+        request.setParameters(parameters);
+        request.executeAsync();
 
     }
 
@@ -242,6 +327,8 @@ public class LoginActivity extends AppCompatActivity {
             } catch (ApiException e) {
                 Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
+        }else{
+            callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
     private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
@@ -260,10 +347,12 @@ public class LoginActivity extends AppCompatActivity {
                             String emaill = user.getEmail();
                             String nameva = user.getDisplayName();
                             Uri userimg = user.getPhotoUrl();
-                            
 
-                            Toast.makeText(LoginActivity.this,emaill+' '+nameva,Toast.LENGTH_LONG).show();
 
+                            Intent in = new Intent(LoginActivity.this, Usermain.class);
+                            in.putExtra("emailval",emaill);
+                            startActivity(in);
+                            finish();
 
 
                         } else {
@@ -285,5 +374,22 @@ public class LoginActivity extends AppCompatActivity {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
 
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+
+    public static void printHashKey(Context pContext) {
+        try {
+            PackageInfo info = pContext.getPackageManager().getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String hashKey = new String(Base64.encode(md.digest(), 0));
+                Log.i("Hasheyyy", "printHashKey() Hash Key: " + hashKey);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "printHashKey()", e);
+        } catch (Exception e) {
+            Log.e(TAG, "printHashKey()", e);
+        }
     }
 }

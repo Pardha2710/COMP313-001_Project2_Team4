@@ -31,4 +31,7 @@
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
+
+    <string name="facebook_app_id">223104568941024</string>
+    <string name="fb_login_protocol_scheme">fb223104568941024</string>
 </resources>

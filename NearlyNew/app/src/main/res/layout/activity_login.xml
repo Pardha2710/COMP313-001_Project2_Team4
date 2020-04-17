@@ -16,7 +16,7 @@
         android:background="@drawable/bg_btn_login"
         app:layout_constraintBottom_toTopOf="@+id/textViewLinkRegister"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintStart_toEndOf="@+id/login_button"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -71,23 +71,27 @@
         android:layout_marginStart="36dp"
         android:layout_marginEnd="11dp"
         android:layout_marginBottom="102dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintEnd_toStartOf="@+id/login_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textEmail"
         app:srcCompat="@drawable/go_icon" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="166dp"
-        android:layout_marginBottom="28dp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewLinkRegister"
-        app:layout_constraintEnd_toStartOf="@+id/appCompatButtonLogin"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLinkForget"
-        app:srcCompat="@drawable/fb_icon" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="68dp"
+        android:layout_height="59dp"
+        android:background="@drawable/fb_icon"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.325"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.844" />
 
     <RadioGroup
         android:id="@+id/radioRole"
@@ -152,7 +156,7 @@
         android:textColor="@color/colorText"
         android:textSize="32px"
         android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/imageView5"
+        app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintEnd_toEndOf="@+id/appCompatButtonLogin"
         app:layout_constraintTop_toBottomOf="@+id/radioRole" />
 
@@ -185,160 +189,3 @@
         app:layout_constraintTop_toBottomOf="@+id/appCompatButtonLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nestedScrollView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F7F7F7"
-    android:paddingBottom="20dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingTop="20dp"
-    tools:context=".LoginActivity"
-    tools:ignore="MissingDefaultResource">
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/store" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/texter"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:textColor="#000"
-            android:text="Login"
-            android:textSize="24sp" />
-
-
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/textEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Enter Email Id"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@android:color/black" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Enter Password"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:textColor="@android:color/black" />
-
-        <RadioGroup
-            android:id="@+id/radioRole"
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/role"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Role " />
-
-            <RadioButton
-                android:id="@+id/radioUser"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:checked="true"
-                android:text="Byer" />
-
-            <RadioButton
-                android:id="@+id/radioSeller"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:text="Seller" />
-
-            <RadioButton
-                android:id="@+id/radioAdmin"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:text="Admin" />
-
-        </RadioGroup>
-
-
-
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/appCompatButtonLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="#FFF"
-            android:background="@drawable/shape"
-            android:text="Login" />
-
-
-        <ImageView
-            android:id="@+id/gsign"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/signin" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/signin_fb" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewLinkRegister"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:clickable="true"
-            android:gravity="center"
-            android:textColor="#000"
-            android:text="Click here to register"
-            android:textSize="16sp" />
-
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewLinkForget"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:textColor="#000"
-            android:clickable="true"
-            android:text="Forget Password"
-            android:textSize="16sp" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-</androidx.core.widget.NestedScrollView>
-
--->

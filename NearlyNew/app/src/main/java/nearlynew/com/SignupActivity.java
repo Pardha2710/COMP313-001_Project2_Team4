@@ -36,7 +36,7 @@ import java.util.Random;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener  {
 
-    private EditText fname, mname,lname, email,phone, pass,cpass,org,country, city, postal;
+    private EditText fname,mname,lname, email,phone, pass,cpass,org,country, city, postal;
     private RadioGroup gender,role;
     private RadioButton radbut,radrole;
     private Button register;

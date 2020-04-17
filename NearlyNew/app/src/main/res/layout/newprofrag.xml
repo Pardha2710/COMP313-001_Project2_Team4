@@ -100,7 +100,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="29dp"
+        android:layout_marginEnd="56dp"
         android:layout_marginBottom="18dp"
         android:fontFamily="@font/montserrat_light"
         android:text="Your Used Cloth Store"
@@ -155,95 +155,3 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nestedScrollView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F7F7F7"
-    android:paddingBottom="20dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingTop="20dp"
-    tools:context=".SignupActivity"
-    tools:ignore="MissingDefaultResource">
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/texter"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:textColor="#000"
-            android:text="Upload New Product"
-            android:textSize="24sp" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/textPname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Product Name"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@android:color/black" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/textComp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Company Name"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@android:color/black" />
-
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/textPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Price"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@android:color/black" />
-
-        <Spinner
-            android:id="@+id/spinner1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/appCompatRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="#FFF"
-            android:background="@drawable/shape"
-            android:text="Select Image And Upload" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-</androidx.core.widget.NestedScrollView>
-
--->
